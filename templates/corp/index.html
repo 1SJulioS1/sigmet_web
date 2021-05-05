@@ -6,6 +6,8 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta charset="UTF-8">
     <link href="{% static 'styles/boostrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/datable/datatables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/datable/buttons.dataTables.min.css' %}" rel="stylesheet">
     <title>Sigmet Corporativo</title>
 </head>
 <body>
@@ -90,26 +92,30 @@
         </div>
 
         <div>
-            <a>Cantidad de instrumentos</a>:{{ cant_instr }}<br>
-            <a>Cantidad de instrumentos analógicos</a>:{{ cant_instr_an }}<br>
-            <a>Cantidad de instrumentos Digitales</a>:{{ cant_instr_dig }}<br>
-            <a>Cantidad de instrumentos de la magnitud especifica frecuencia</a>:{{ instr_por_mag_frec }}<br>
-            <a>Cantidad de instrumentos que sean Pie de Rey</a>:{{ cant_instr_dim }}<br>
-            <a>Cantidad de instrumentos que sean Cinta métrica</a>:{{ cant_cintas }}<br>
-            <a>Cantidad de instrumentos que sean Medidores de nivel</a>:{{ cant_medidor_nivel }}<br>
-            <a>Cantidad de instrumentos que sean Medidores de ángulo</a>:{{ cant_medidor_angulo }}<br>
-            <a>Cantidad de instrumentos que sean Comparadores de carátulas</a>:{{ cant_comparador_caratula }}<br>
-            <a>Cantidad de instrumentos que sean Reglas</a>:{{ cant_regla }}<br>
-            <a>Cantidad de instrumentos que sean Galgas</a>:{{ cant_galga }}<br>
-            <a>Cantidad de instrumentos Patrones que sean de la magnitud
-                Electricidad</a>:{{ cant_patr_electricidad }}<br>
-            <a>Cantidad de instrrumentos Patrones que sean de la magnitud especifica Tension</a>:{{ cant_patr_tension }}<br>
-            <a>Cantidad de instrrumentos Patrones que sean de la magnitud especifica
-                Resistencia</a>:{{ cant_patr_resistencia }}<br>
-            <a>Cantidad de instrrumentos Patrones que sean de la magnitud Presion</a>:{{ cant_patr_presion }}<br>
-            <a>Cantidad de instrrumentos Patrones que sean de la magnitud
-                Temperatura</a>:{{ cant_patr_temperatura }}<br>
-            <table>
+            <div>
+                <a>Cantidad de instrumentos</a>:{{ cant_instr }}<br>
+                <a>Cantidad de instrumentos analógicos</a>:{{ cant_instr_an }}<br>
+                <a>Cantidad de instrumentos Digitales</a>:{{ cant_instr_dig }}<br>
+                <a>Cantidad de instrumentos de la magnitud especifica frecuencia</a>:{{ instr_por_mag_frec }}<br>
+                <a>Cantidad de instrumentos que sean Pie de Rey</a>:{{ cant_instr_dim }}<br>
+                <a>Cantidad de instrumentos que sean Cinta métrica</a>:{{ cant_cintas }}<br>
+                <a>Cantidad de instrumentos que sean Medidores de nivel</a>:{{ cant_medidor_nivel }}<br>
+                <a>Cantidad de instrumentos que sean Medidores de ángulo</a>:{{ cant_medidor_angulo }}<br>
+                <a>Cantidad de instrumentos que sean Comparadores de carátulas</a>:{{ cant_comparador_caratula }}<br>
+                <a>Cantidad de instrumentos que sean Reglas</a>:{{ cant_regla }}<br>
+                <a>Cantidad de instrumentos que sean Galgas</a>:{{ cant_galga }}<br>
+                <a>Cantidad de instrumentos Patrones que sean de la magnitud
+                    Electricidad</a>:{{ cant_patr_electricidad }}<br>
+                <a>Cantidad de instrrumentos Patrones que sean de la magnitud especifica
+                    Tension</a>:{{ cant_patr_tension }}<br>
+                <a>Cantidad de instrrumentos Patrones que sean de la magnitud especifica
+                    Resistencia</a>:{{ cant_patr_resistencia }}<br>
+                <a>Cantidad de instrrumentos Patrones que sean de la magnitud Presion</a>:{{ cant_patr_presion }}<br>
+                <a>Cantidad de instrrumentos Patrones que sean de la magnitud
+                    Temperatura</a>:{{ cant_patr_temperatura }}<br>
+            </div>
+            <table class="table display  table-hover" role="grid" aria-describedby="dataTable_info" id="example"
+                   style="width: 100%;">
                 <thead>
                 <tr>
                     <th>Magnitud</th>
@@ -157,8 +163,15 @@
 </div>
 
 <script src="{% static 'scripts/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'scripts/datable/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'scripts/popper.min.js' %}"></script>
 <script src="{% static 'scripts/boostrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'scripts/datable/datatables.min.js' %}"></script>
+<script src="{% static 'scripts/datable/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'scripts/datable/pdfmake.min.js' %}"></script>
+<script src="{% static 'scripts/datable/vfs_fonts.js' %}"></script>
+<script src="{% static 'scripts/datable/datatable_start.js' %}"></script>
+
 
 </body>
 </html>
