@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="{% static 'styles/boostrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/datable/datatables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/datable/buttons.dataTables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/custom_styles.css' %}" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <title>Sigmet Corporativo</title>
+
+</head>
+<body>
+<div class="justify-content-between">
+    <ul class="navbar navbar-dark shadow-sm ">
+        <li class="active">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'corp:index' %}">
+                <strong>Inicio</strong>
+            </a>
+        </li>
+
+        <li class="active">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'corp:generalidades_instrumento' %}">
+                <strong>Generalidades</strong>
+            </a>
+        </li>
+
+        <li class="dropdown navbar-dark shadow-sm">
+            <a class="navbar-brand d-flex align-items-center dropdown-toggle" href="#" data-toggle="dropdown">
+                <strong>Magnitudes</strong>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{% url 'corp:magnitud_instrumento' %}">
+                        <strong>Generalidades</strong>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'corp:export_mag' %}">
+                        <strong>Especifico por provincias</strong>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="dropdown navbar-dark shadow-sm">
+            <a class="navbar-brand d-flex align-items-center dropdown-toggle" href="#" data-toggle="dropdown">
+                <strong>Instrumentos de trabajo</strong>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{% url 'corp:instrumento_trabajo_gen' %}">
+                        <strong>Generalidades</strong>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'corp:instrumento_trabajo_pc' %}">
+                        <strong>Por procesos corporativos</strong>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'corp:instrumento_trabajo_explot' %}">
+                        <strong>Por años de explotación</strong>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'corp:instrumento_trabajo_fab' %}">
+                        <strong>Por fabricantes</strong>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li class="active">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'corp:patron_instrumento' %}">
+                <strong>Patrones</strong>
+            </a>
+        </li>
+        <li>
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'corp:logout' %}">
+                Cerrar Sesion
+            </a>
+        </li>
+    </ul>
+</div>
+
+<main role="main">
+    {% block content %}
+
+    {% endblock %}
+</main>
+
+<script src="{% static 'scripts/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'scripts/highcharts.js' %}"></script>
+<script src="{% static 'scripts/datable/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'scripts/popper.min.js' %}"></script>
+<script src="{% static 'scripts/boostrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'scripts/datable/datatables.min.js' %}"></script>
+<script src="{% static 'scripts/datable/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'scripts/datable/pdfmake.min.js' %}"></script>
+<script src="{% static 'scripts/datable/vfs_fonts.js' %}"></script>
+<script src="{% static 'scripts/datable/datatable_start.js' %}"></script>
+
+<script>
+    $.ajax({
+        url: $("#container").attr("data-url"),
+        dataType: 'json',
+        success: function (data) {
+            Highcharts.chart("container", data);
+        }
+    });
+</script>
+
+</body>
+</html>

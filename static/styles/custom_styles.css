@@ -1,0 +1,55 @@
+.header-bordered {
+    border-radius: 30px;
+}
+
+p {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+a, h1, h2, h3, h4, h5 {
+    font-family: 'Playfair Display', serif;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: url("../img/index_background2.jpg") repeat-x center fixed;
+    position: center;
+    background-size: 100% 100%;
+}
+
+.card-body, .custom-background {
+    border-radius: 20px;
+    color: black;
+}
+
+.card {
+    border-radius: 30px;
+}
+
+.navbar {
+    background-color: #071e22;
+}
+
+.btn {
+    background-color: #faf3dd;
+}
+
+.extracted {
+    color: black;
+    align-content: center;
+}
+
+#main-title {
+    color: black;
+}
+
+
+#index-id {
+    margin-top: 100px;
+}
+
+.navbar {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+

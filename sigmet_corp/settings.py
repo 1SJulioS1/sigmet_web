@@ -76,12 +76,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
         'HOST': "localhost",
-        'USER': "sa",
-        'PASSWORD': "sa123A*234",
-        'NAME': "SigmetDatabase",
+        'USER': "sigmet",
+        'PASSWORD': "sigmet",
+        'NAME': "SigCorpDatabase",
         'PORT': 1433,
         'OPTIONS': {
-            'driver': 'SQL Server Native Client 11.0',
+            'driver': 'SQL Server Native Client 10.0',
             'MARS_Connection': True,
             'driver_supports_utf8': True,
         },
@@ -127,3 +127,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     'static'
 ]
+
+LOGIN_URL = 'corp:principal'

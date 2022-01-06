@@ -1,0 +1,222 @@
+{% extends 'corp/base.html' %}
+
+{% block content %}
+    <div class="container ">
+        <div class="row text-center">
+            <div class="container border custom-background header-bordered ">
+                <h2>Resumen de instrumentos patrones</h2>
+                <br>
+                <h4>Total de instrumentos patrones: {{ cant_patr }}</h4>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Electricidad
+                            <br>{{ cant_electr }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Presión
+                            <br>{{ cant_presion }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Temperatura
+                            <br>{{ cant_temp }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Flujo/Gasto
+                            <br>{{ cant_flujo }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Volumen
+                            <br>{{ cant_volumen }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Dimensional
+                            <br>{{ cant_patr_dimensional }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Masa
+                            <br>{{ cant_masa }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Fuerza
+                            <br>{{ cant_fuerza }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Fisico/Quimico
+                            <br>{{ cant_fis_quim }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Vibraciones
+                            <br>{{ cant_vibr }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Ruidos/Sonómetros
+                            <br>{{ cant_ruido }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Iluminación/Luxómetros
+                            <br>{{ cant_ilum }}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"> Patrones de ensayos metalográficos
+                            <br>{{ cant_patr_metalografico }}</h5></div>
+                </div>
+            </div>
+            <div class="col-md-6 mx-auto">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"> Patrones de ensayos quimicos
+                            <br>{{ cant_patr_quimicos }}</h5></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card-group">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title  text-center"> Electricidad</h5>
+                            <div class="dropdown-divider"></div>
+                            <p class="card-text text-center">Energía monofásicos de alta
+                                exactitud {{ cant_energia_monofasico }}</p>
+
+                            <div class="dropdown-divider"></div>
+                            <p class="card-text text-center">Energía trifásicos de alta
+                                exactitud {{ cant_energia_trifasico }}</p>
+
+                            <div class="dropdown-divider"></div>
+                            <p class="card-text text-center">Energía de trabajo
+                                <br>{{ cant_patr_ener_trab }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <p class="card-text text-center">Intensidad de corriente: {{ cant_electr_intensidad }}</p>
+
+                            <div class="dropdown-divider"></div>
+                            <p class="card-text text-center">Tensión: {{ cant_electr_tension }}</p>
+
+                            <div class="dropdown-divider"></div>
+                            <p class="card-text text-center">Resistencia: {{ cant_electr_resistencia }}</p>
+
+                            <div class="dropdown-divider"></div>
+                            <p class="card-text text-center">Relación de Transformación: {{ cant_rel_trans }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3 ">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"> Presión</h5>
+
+                        <div class="dropdown-divider"></div>
+                        <p class="card-text">Hasta 1 MPa: {{ cant_presion_1mpa }}</p>
+
+                        <div class="dropdown-divider"></div>
+                        <p class="card-text ">De 1.1 MPa a 10 MPa: {{ cant_presion_1_10 }}</p>
+
+                        <div class="dropdown-divider"></div>
+                        <p class="card-text ">De 10.1 MPa a 100 MPa: {{ cant_presion_10_100 }}</p>
+
+                        <div class="dropdown-divider"></div>
+                        <p class="card-text ">De 100.1 MPa a 250 MPa: {{ cant_presion_100_250 }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"> Temperatura</h5>
+
+                        <div class="dropdown-divider"></div>
+                        <p class="card-text ">Hasta 100 ºC: {{ cant_temp_100 }}</p>
+
+                        <div class="dropdown-divider"></div>
+                        <p class="card-text ">De 100 ºC a 500 ºC: {{ cant_temp_100_500 }}</p>
+
+                        <div class="dropdown-divider"></div>
+                        <p class="card-text ">De 500 ºC a 1000 ºC: {{ cant_temp_500_1000 }}</p>
+
+                        <div class="dropdown-divider"></div>
+                        <p class="card-text ">De 1000 ºC a 2000 ºC: {{ cant_temp_1000_2000 }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
