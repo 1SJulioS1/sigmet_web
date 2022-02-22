@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="{% static 'styles/boostrap/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'styles/boostrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/datable/datatables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/datable/buttons.dataTables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/custom_styles.css' %}" rel="stylesheet">
+    <title>Sigmet Corporativo</title>
+</head>
+<body>
+<div class="col">
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-8 align-content-center">
+            <div class="container">
+                <div id="about_us" class="about__us" style="text-align: center">
+                    <div class="col mb-5">
+                        <h1 class="text-center font-weight-bold">Sigmet Corporativo</h1>
+                        <p>Plataforma para la gestion de los parametros metrológicos en las entidades de la Unión
+                            Eléctrica</p>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="col mt-5">
+                        <div class="row d-felx justify-content-center">
+                            <div class="col-md-4 text-center">
+                                <div class="label-icon">
+                                    <i class="fa fa-phone"></i>
+                                    <label>42 291854 ext-110</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="{% static 'img/logoATI.png' %}" alt="ati">
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="label-icon">
+                                    <i class="fa fa-envelope"></i>
+                                    <label>soporte.sigmet@ativc.une.cu</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-12 text-center">
+                            <div class="label-icon">
+                                <i class="fa fa-map-marker"></i>
+                                <label>Calle Campo No. 1 entre Carretera Central y Prolongación de Independencia.
+                                    Reparto Virginia. Santa Clara, Villa Clara.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <form id="formulario" class="form container" method="post">
+                {% csrf_token %}
+                <div class="col mt-5">
+                    <div class="form-group">
+                        <div class="input-icon">
+                            <i class="fa fa-user"></i>
+                            <input type="text" id="user" class="form-control col-8" name="user"
+                                   placeholder="usuario">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon">
+                            <i class="fa fa-key"></i>
+                            <input id="password" type="password" class="form-control col-8" name="password"
+                                   autocomplete="off" placeholder="contraseña">
+                        </div>
+                    </div>
+                    {% if invalid_login %}
+                        <div class="alert alert-danger" id="wrong">
+                            <span>{{ msg }}</span>
+                            <label class="pull-right" id="wrong-button">x</label>
+                        </div>
+                    {% endif %}
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success col-lg-6"> Iniciar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        let a_btn_1 = document.getElementById('wrong-button');
+
+
+        a_btn_1.addEventListener('click', function () {
+            document.getElementById('wrong').hidden = true;
+        }, false);
+
+    }())
+</script>
+</body>
+</html>

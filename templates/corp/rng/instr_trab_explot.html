@@ -1,0 +1,72 @@
+{% extends 'corp/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <div class="container border header-bordered custom-background">
+                <h2>Instrumentos de trabajo por años de explotación</h2>
+                <br>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="container border header-bordered">
+                <h3>Más de 20 años de explotación</h3>
+                <br>
+            </div>
+            {% for prov, ipc in ipcpp_20 %}
+                <div class="col-md-3">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ prov }}</h4>
+                            <div class="dropdown-divider"></div>
+                            {% for emp, ctd in ipc %}
+                                <p class="card-text">{{ emp }} : {{ ctd }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <div class="row">
+            <div class="container border header-bordered">
+                <h3>Entre 10 y 20 años de explotación</h3>
+                <br>
+            </div>
+            {% for prov, ipc in ipcpp_10_20 %}
+                <div class="col-md-3">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ prov }}</h4>
+                            <div class="dropdown-divider"></div>
+                            {% for emp, ctd in ipc %}
+                                <p class="card-text">{{ emp }} : {{ ctd }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <div class="row">
+            <div class="container border header-bordered">
+                <h3>Menos de 10 años de explotación</h3>
+                <br>
+            </div>
+            {% for prov, ipc in ipcpp_0_10 %}
+                <div class="col-md-3">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ prov }}</h4>
+                            <div class="dropdown-divider"></div>
+                            {% for emp, ctd in ipc %}
+                                <p class="card-text">{{ emp }} : {{ ctd }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

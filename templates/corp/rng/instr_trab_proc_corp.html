@@ -1,0 +1,37 @@
+{% extends 'corp/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <div class="container border header-bordered custom-background">
+                <h2>Instrumentos de trabajo por procesos corporativos</h2>
+                <br>
+            </div>
+        </div>
+        <br>
+        {% for prov, lpc in ipcpp %}
+            <div class="row text-center">
+                <div class="container border header-bordered shadow-sm">
+                    <h3>{{ prov }}</h3>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                {% for emp, aux in lpc %}
+                    <div class="col-md-3 mx-auto">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ emp }}</h5>
+                                {% for proc, ctd in aux %}
+                                    <div class="dropdown-divider"></div>
+                                    <p class="card-text text-center">{{ proc }} : {{ ctd }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+{% endblock %}

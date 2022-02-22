@@ -886,3 +886,15 @@ def check_catuso_indvisual(inst, nombre):
                 return 0
         else:
             return 1
+        
+        
+def more_info(ins, inst_gen):
+    empresas = Empresas.objects.all()
+    for emp in empresas:
+        if ins.idemp_id == emp.idemp and ins.empiddb_id == emp.empiddb:
+            if emp.empnom in inst_gen:
+                inst_gen[emp.empnom] += 1
+            else:
+                inst_gen[emp.empnom] = 1
+            break
+    return inst_gen
