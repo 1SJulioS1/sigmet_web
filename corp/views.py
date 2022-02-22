@@ -55,6 +55,7 @@ def cant_inst(request):
 
 def generalidades_instrumento(request):
     instr_single = remove_duplicated_instruments()
+    empresas = Empresas.objects.all()
     magns = Magnitudes.objects.all()
     cant_instr = 0
     lista1, lista2, lista3, lista4 = obtener_instrumento_fabricante(instr_single)
@@ -63,6 +64,7 @@ def generalidades_instrumento(request):
     cant_inst_multifunc_nom_dif_uso = 0
     cant_inst_multifunc_nom_dif_almacenado = 0
     cant_uso = 0
+    inst_uso = dict()
     cant_roto = 0
     cant_alm = 0
     for ins in instr_single:
@@ -84,6 +86,13 @@ def generalidades_instrumento(request):
                     cant_inst_multifunc_nom_dif_almacenado += 1
         if ins.estadoinstnom.estadoinstnom == 'Uso':
             cant_uso += 1
+            for emp in empresas:
+                if ins.idemp_id == emp.idemp and ins.empiddb_id == emp.empiddb:
+                    if emp.empnom in inst_uso:
+                        inst_uso[emp.empnom] += 1
+                    else:
+                        inst_uso[emp.empnom] = 1
+                    break
         else:
             if ins.estadoinstnom.estadoinstnom == 'Almacenado':
                 cant_alm += 1
@@ -100,7 +109,8 @@ def generalidades_instrumento(request):
                                                            'lista2': lista2,
                                                            'lista3': lista3,
                                                            'lista4': lista4,
-                                                           'inst_uso': cant_uso,
+                                                           'cant_uso': cant_uso,
+                                                           'inst_uso': inst_uso,
                                                            'inst_roto': cant_roto,
                                                            'inst_alm': cant_alm,
                                                            })
