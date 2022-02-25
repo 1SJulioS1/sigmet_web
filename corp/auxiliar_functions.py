@@ -277,6 +277,11 @@ def instrumentos_medidores_resistencia(instr_single):
     count_ohm = 0
     count_kiloohm = 0
     count_megaohm = 0
+
+    miliohm_dict = dict()
+    ohm_dict = dict()
+    kiloohm_dict = dict()
+    megaohm_dict = dict()
     for um in unimed:
         if um.unimednom == 'Miliohm' or um.unimednom == 'miliohm':
             for rmu in relmagunimed:
@@ -290,6 +295,7 @@ def instrumentos_medidores_resistencia(instr_single):
                                     for ins in instr_single:
                                         if ins.idinst == cm.idinst_id:
                                             count_miliohm += 1
+                                            miliohm_dict = more_info(ins, miliohm_dict)
                             if count_miliohm != 0:
                                 if cadena in miliohm:
                                     miliohm[cadena] += count_miliohm

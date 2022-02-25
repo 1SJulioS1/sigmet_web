@@ -13,8 +13,6 @@ urlpatterns = [
     path('index/', login_required(views.cant_inst, redirect_field_name=''), name='index'),
     path('gener/', login_required(views.generalidades_instrumento, redirect_field_name=''),
          name='generalidades_instrumento'),
-    path('gener/instr-ind_visual/data/', login_required(views.instrumentos_indicacion_data, redirect_field_name=''),
-         name='instrumento_ind_visual_data'),
     path('magn/', login_required(views.magnitud_instrumento, redirect_field_name=''), name='magnitud_instrumento'),
     path('rango/gen/', login_required(views.instrumentos_trabajo_gen, redirect_field_name=''),
          name='instrumento_trabajo_gen'),

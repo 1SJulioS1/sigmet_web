@@ -1,12 +1,16 @@
 {% extends 'corp/base.html' %}
 
+{% load static %}
+
 {% block content %}
     <div class="container">
         <div class="row text-center">
             <div class="container border header-bordered custom-background">
                 <h2>Resumen de instrumentos de trabajo</h2>
                 <br>
-                <h4>Total de instrumentos de trabajo: {{ cant_trab }}</h4>
+                <h4>Total de instrumentos de trabajo: {{ cant_trab }}
+                    <i class="fa fa-plus" onclick="modal_function('{{ inst_trab_more_info|escapejs }}')"></i>
+                </h4>
             </div>
         </div>
         <br>
@@ -16,6 +20,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Electricidad
                             <br>{{ cant_electr }}
+
                         </h5>
                     </div>
                 </div>
@@ -305,4 +310,8 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'scripts/gen.js' %}"></script>
 {% endblock %}

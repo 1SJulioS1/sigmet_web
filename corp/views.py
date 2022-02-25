@@ -70,6 +70,11 @@ def generalidades_instrumento(request):
     inst_uso = dict()
     inst_alm = dict()
     inst_roto = dict()
+    multi_elect_uso = dict()
+    multi_elect_alm = dict()
+    multi_nom_dif_uso = dict()
+    multi_nom_dif_alm = dict()
+
     for ins in instr_single:
         cant_instr += 1
         for m in magns:
@@ -77,16 +82,20 @@ def generalidades_instrumento(request):
                 if ins.instdescripcion == 'Multifunción con 2 o 3 magnitudes eléctricas':
                     if ins.estadoinstnom.estadoinstnom == 'Uso':
                         cant_inst_multifunc_elect_uso += 1
+                        multi_elect_uso = more_info(ins, multi_elect_uso)
                     else:
                         if ins.estadoinstnom.estadoinstnom == 'Almacenado':
                             cant_inst_multifunc_elect_almacenado += 1
+                            multi_elect_alm = more_info(ins, multi_elect_alm)
                 break
         if ins.instdescripcion == 'Multifunción con 2 o 3 nomenclaturas diferentes':
             if ins.estadoinstnom.estadoinstnom == 'Uso':
                 cant_inst_multifunc_nom_dif_uso += 1
+                multi_nom_dif_uso = more_info(ins, multi_nom_dif_uso)
             else:
                 if ins.estadoinstnom.estadoinstnom == 'Almacenado':
                     cant_inst_multifunc_nom_dif_almacenado += 1
+                    multi_nom_dif_alm = more_info(ins, multi_nom_dif_alm)
         if ins.estadoinstnom.estadoinstnom == 'Uso':
             cant_uso += 1
             inst_uso = more_info(ins, inst_uso)
@@ -113,7 +122,11 @@ def generalidades_instrumento(request):
                                                            'cant_roto': cant_roto,
                                                            'inst_roto': json.dumps(inst_roto),
                                                            'cant_alm': cant_alm,
-                                                           'inst_alm': json.dumps(inst_alm)
+                                                           'inst_alm': json.dumps(inst_alm),
+                                                           'multi_elect_uso': json.dumps(multi_elect_uso),
+                                                           'multi_elect_alm': json.dumps(multi_elect_alm),
+                                                           'multi_nom_dif_uso': json.dumps(multi_nom_dif_uso),
+                                                           'multi_nom_dif_alm': json.dumps(multi_nom_dif_alm)
                                                            })
 
 
@@ -122,39 +135,6 @@ def magnitud_instrumento(request):
 
     return render(request, 'corp/magnitud/magn.html', {'ipmpg': inst_per_magn_per_group,
                                                        })
-
-
-def instrumentos_indicacion_data(request):
-    instr_single = remove_duplicated_instruments()
-    cant_instr_an = 0
-    cant_instr_dig = 0
-    cant_inst_no_ind_visual = 0
-    for ins in instr_single:
-        if ins.instindvisual == 'Analógico':
-            cant_instr_an += 1
-        else:
-            if ins.instindvisual == 'Digital':
-                cant_instr_dig += 1
-            else:
-                if ins.instindvisual is None:
-                    cant_inst_no_ind_visual += 1
-    instr_ind_visual = [('Digital', cant_instr_dig), ('Analógico', cant_instr_an),
-                        ('Sin indicador visual', cant_inst_no_ind_visual)]
-    chart = {
-        'chart': {'type': 'column'},
-        'title': {'text': 'Cantidad de instrumentos por indicador visual'},
-        'xAxis': {
-            'categories': [x[0] for x in instr_ind_visual],
-            'crosshair': 'true'
-        },
-        'credits': {'enabled': 'false'},
-        'series': [{
-            'name': 'Cantidad',
-            'data': [x[1] for x in instr_ind_visual]
-        }]
-    }
-
-    return JsonResponse(chart)
 
 
 def instrumentos_trabajo_gen(request):
@@ -232,11 +212,11 @@ def instrumentos_trabajo_gen(request):
     for ins in instr_single:
         if ins.catusonom.catusonom == 'Trabajo':
             cant_trab += 1
-            inst_trab_more_info = more_info(ins, instr_trab)
+            inst_trab_more_info = more_info(ins, inst_trab_more_info)
             instr_trab.append(ins)
-            if ins.instnom.__contains__('Voltimetro') or ins.instnom.__contains__('VoltÃ­metro'):
+            if ins.instnom.__contains__('Voltimetro') or ins.instnom.__contains__('Voltímetro'):
                 inst_tension_subset.append(ins)
-            if ins.instnom.__contains__('VacuÃ³metro') or ins.instnom.__contains__('Vacuometro'):
+            if ins.instnom.__contains__('Vacuómetro') or ins.instnom.__contains__('Vacuometro'):
                 count_vacuometro += 1
                 inst_vacuometro_more_info = more_info(ins, inst_vacuometro_more_info)
             if ins.instnom.__contains__('Pie de rey') or ins.instnom.__contains__('pie de rey'):
@@ -249,20 +229,20 @@ def instrumentos_trabajo_gen(request):
                             count_pie_rey_profundidad += 1
                             inst_pie_rey_profundidad_more_info = more_info(ins, inst_pie_rey_profundidad_more_info)
                             break
-            if ins.instnom.__contains__('MicrÃ³metro'):
+            if ins.instnom.__contains__('Micrómetro'):
                 instr_micrometro.append(ins)
                 count_micrometro += 1
                 inst_micrometro_more_info = more_info(ins, inst_micrometro_more_info)
-            if ins.instnom.__contains__('Cinta mÃ©trica'):
+            if ins.instnom.__contains__('Cinta métrica'):
                 cant_cintas += 1
                 inst_cintas_more_info = more_info(ins, inst_cintas_more_info)
             if ins.instnom.__contains__('Medidor de nivel'):
                 cant_medidor_nivel += 1
                 inst_medidor_nivel_more_info = more_info(ins, inst_medidor_nivel_more_info)
-            if ins.instnom.__contains__('Medidor de Ã¡ngulo'):
+            if ins.instnom.__contains__('Medidor de ángulo'):
                 cant_medidor_angulo += 1
                 inst_medidor_angulo_more_info = more_info(ins, inst_medidor_angulo_more_info)
-            if ins.instnom.__contains__('Comparador de carÃ¡tulas'):
+            if ins.instnom.__contains__('Comparador de carátulas'):
                 cant_comparador_caratula += 1
                 inst_comparador_caraturla_more_info = more_info(ins, inst_comparador_caraturla_more_info)
             if ins.instnom.__contains__('Regla'):
@@ -271,14 +251,14 @@ def instrumentos_trabajo_gen(request):
             if ins.instnom.__contains__('Galga'):
                 cant_galga += 1
                 inst_galga_more_info = more_info(ins, inst_galga_more_info)
-            if ins.instnom.__contains__('TTR') or ins.instnom.__contains__('Medidor de RelaciÃ³n de TransformaciÃ³n'):
+            if ins.instnom.__contains__('TTR') or ins.instnom.__contains__('Medidor de Relación de Transformación'):
                 cant_ttr += 1
                 inst_ttr_more_info = more_info(ins, inst_ttr_more_info)
-            if ins.instnom.__contains__('Medidor de armÃ³nico'):
+            if ins.instnom.__contains__('Medidor de armónico'):
                 cant_armonico += 1
                 inst_armonico_more_info = more_info(ins, inst_armonico_more_info)
             if ins.instdescripcion is not None:
-                if ins.instdescripcion.__contains__('MultifunciÃ³n'):
+                if ins.instdescripcion.__contains__('Multifunción'):
                     cant_multif += 1
                     inst_multif_more_info = more_info(ins, inst_multif_more_info)
             for m in magns:
@@ -287,7 +267,7 @@ def instrumentos_trabajo_gen(request):
                         count_mag_frec += 1
                         inst_mag_frec_more_info = more_info(ins, inst_mag_frec_more_info)
                 else:
-                    if m.grpmagnom.grpmagnom == 'PresiÃ³n':
+                    if m.grpmagnom.grpmagnom == 'Presión':
                         if m.idmag == ins.idmag_id and m.magiddb == ins.magiddb_id:
                             instrumentos_grupo_presion.append(ins)
                             cant_presion += 1
@@ -347,52 +327,52 @@ def instrumentos_trabajo_gen(request):
     return render(request, 'corp/rng/rango.html',
                   {'cant_trab': cant_trab,
                    # New
-                   'inst_trab_more_info': inst_trab_more_info,
+                   'inst_trab_more_info': json.dumps(inst_trab_more_info),
                    'count_vacuometro': count_vacuometro,
                    # New
-                   'inst_vacuometro_more_info': inst_vacuometro_more_info,
+                   'inst_vacuometro_more_info': json.dumps(inst_vacuometro_more_info),
                    'count_pie_rey': count_pie_rey,
                    # New
-                   'inst_pie_rey_more_info': inst_pie_rey_more_info,
+                   'inst_pie_rey_more_info': json.dumps(inst_pie_rey_more_info),
                    'count_pie_rey_profundidad': count_pie_rey_profundidad,
                    # New
-                   'inst_pie_rey_profundidad_more_info': inst_pie_rey_profundidad_more_info,
+                   'inst_pie_rey_profundidad_more_info': json.dumps(inst_pie_rey_profundidad_more_info),
                    'count_micrometro': count_micrometro,
                    # New
-                   'inst_micrometro_more_info': inst_micrometro_more_info,
+                   'inst_micrometro_more_info': json.dumps(inst_micrometro_more_info),
                    'count_cintas': cant_cintas,
                    # New
-                   'inst_cintas_more_info': inst_cintas_more_info,
+                   'inst_cintas_more_info': json.dumps(inst_cintas_more_info),
                    'count_medidor_nivel': cant_medidor_nivel,
                    # New
-                   'inst_medidor_nivel_more_info': inst_medidor_nivel_more_info,
+                   'inst_medidor_nivel_more_info': json.dumps(inst_medidor_nivel_more_info),
                    'count_medidor_angulo': cant_medidor_angulo,
                    # New
-                   'inst_medidor_angulo_more_info': inst_medidor_angulo_more_info,
+                   'inst_medidor_angulo_more_info': json.dumps(inst_medidor_angulo_more_info),
                    'count_comparador_caratula': cant_comparador_caratula,
                    # New
-                   'inst_comparador_caraturla_more_info': inst_comparador_caraturla_more_info,
+                   'inst_comparador_caraturla_more_info': json.dumps(inst_comparador_caraturla_more_info),
                    'count_regla': cant_regla,
                    # New
-                   'inst_regla_more_info': inst_regla_more_info,
+                   'inst_regla_more_info': json.dumps(inst_regla_more_info),
                    'count_galga': cant_galga,
                    # New
-                   'inst_galga_more_info': inst_galga_more_info,
+                   'inst_galga_more_info': json.dumps(inst_galga_more_info),
                    'count_ttr': cant_ttr,
                    # New
-                   'inst_ttr_more_info': inst_ttr_more_info,
+                   'inst_ttr_more_info': json.dumps(inst_ttr_more_info),
                    'count_arm': cant_armonico,
                    # New
-                   'inst_armonico_more_info': inst_armonico_more_info,
+                   'inst_armonico_more_info': json.dumps(inst_armonico_more_info),
                    'count_multif': cant_multif,
                    # New
-                   'inst_multif_more_info': inst_multif_more_info,
+                   'inst_multif_more_info': json.dumps(inst_multif_more_info),
                    'count_mag_frec': count_mag_frec,
                    # New
-                   'inst_mag_frec_more_info': inst_mag_frec_more_info,
+                   'inst_mag_frec_more_info': json.dumps(inst_mag_frec_more_info),
                    'cant_presion': cant_presion,
                    # New
-                   'inst_presion_more_info': inst_presion_more_info,
+                   'inst_presion_more_info': json.dumps(inst_presion_more_info),
                    'count_1_kV': count_1_kV,
                    'count_1_5_V': count_1_5_kV,
                    'count_5_10_kV': count_5_10_kV,
@@ -425,7 +405,6 @@ def instrumentos_trabajo_gen(request):
                    'kiloohm': kiloohm_lista,
                    'megaohm': megaohm_lista,
                    })
-
 
 
 def instrumentos_trabajo_pc(request):
@@ -663,10 +642,9 @@ def patrones(request):
                                                        'cant_ilum': dictionary.get('cant_ilum'),
                                                        })
 
-
-
-
 # Data Grafico para cantidad de instrumentos por magnitud
+
+
 def instrumento_magnitud_data(request):
     instr_por_mag = []
     for i in Magnitudes.objects.all():
