@@ -1,5 +1,7 @@
 {% extends 'corp/base.html' %}
 
+{% load static %}
+
 {% block content %}
     <div class="container">
         <div class="row text-center">
@@ -9,21 +11,30 @@
         </div>
         <br>
         <div class="row">
-            {% for g, list in ipmpg %}
+            {% for g, inst_per_mag in ipmpg.items %}
                 <div class="col-md-3 mx-auto">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
                             <h3 class="card-title text-center">{{ g }}</h3>
-                            {% for m, ctd in list %}
+                            {% for m, aux in inst_per_mag.items %}
                                 <div class="dropdown-divider"></div>
-                                <p class="card-text">{{ m }} : {{ ctd }}</p>
+                                {% for ctd, inst_per_comp in aux.items %}
+                                    <p class="card-text">{{ m }} : {{ ctd }}
+                                        <button type="button" id="btn_uso" class="btn button-color btn-icon-only"
+                                                onclick="modal_function('{{ inst_per_comp|escapejs }}')">
+                                            <i class="fa fa-angle-double-right"></i>
+                                        </button>
+                                    </p>
+                                {% endfor %}
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-
     </div>
+{% endblock %}
 
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'scripts/gen.js' %}"></script>
 {% endblock %}

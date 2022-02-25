@@ -2,6 +2,7 @@ from datetime import date
 
 import pandas as pd
 import xlsxwriter
+import json
 
 from corp.models import *
 
@@ -40,24 +41,21 @@ def instrumentos_por_magnitud():
     magns = Magnitudes.objects.all()
     instr_single = remove_duplicated_instruments()
 
-    inst_per_mag_per_group = []
+    inst_per_mag_per_group = dict()
     for g in grupo:
         inst_per_magns = dict()
         for m in magns:
             if m.grpmagnom.grpmagnom == g.grpmagnom:
                 count = 0
+                inst_per_comp = dict()
                 for i in instr_single:
                     if i.idmag_id == m.idmag and i.magiddb_id == m.magiddb:
                         count += 1
-                if m.magnom in inst_per_magns:
-                    inst_per_magns[m.magnom] += count
-                else:
-                    inst_per_magns[m.magnom] = count
-        keys = inst_per_magns.keys()
-        auxiliar = []
-        for k in keys:
-            auxiliar.append((k, inst_per_magns[k]))
-        inst_per_mag_per_group.append((g.grpmagnom, auxiliar))
+                        inst_per_comp = more_info(i, inst_per_comp)
+                aux = dict()
+                aux[str(count)] = json.dumps(inst_per_comp)
+                inst_per_magns[m.magnom] = aux
+        inst_per_mag_per_group[g.grpmagnom] = inst_per_magns
 
     return inst_per_mag_per_group
 
@@ -219,18 +217,14 @@ def remove_duplicated_campanies():
 
 def obtener_instrumento_fabricante(instr):
     inst_fabr = dict()
-    inst_fab_list = []
+    inst_gen = dict()
     for i in instr:
         inst_fabr[i.instmarca] = 0
-    for i in instr:
-        if i.instmarca in inst_fabr:
-            inst_fabr[i.instmarca] += 1
-        else:
-            inst_fabr[i.instmarca] = 1
-    count = 0
     for i in inst_fabr:
-        inst_fab_list.append((i, inst_fabr[i]))
-        count += 1
+        ctd, d = inst_fabr[i.instmarca]
+        d = more_info(i, d)
+        inst_fabr[i.instmarca] = (ctd + 1, d)
+    count = inst_fabr.__len__()
 
     list1 = []
     list2 = []
@@ -238,18 +232,19 @@ def obtener_instrumento_fabricante(instr):
     list4 = []
     count1 = count / 4
     count2 = 0
-    for f, ctd in inst_fab_list:
+    for item in inst_fabr:
+        ctd, d = inst_fabr[item]
         if count2 < count1:
-            list1.append((f, ctd))
+            list1.append((item, ctd, json.dumps(d)))
         else:
             if count2 < count1 * 2:
-                list2.append((f, ctd))
+                list2.append((item, ctd, json.dumps(d)))
             else:
                 if count2 < count1 * 3:
-                    list3.append((f, ctd))
+                    list3.append((item, ctd, json.dumps(d)))
                 else:
                     if count2 < count1 * 4:
-                        list4.append((f, ctd))
+                        list4.append((item, ctd, json.dumps(d)))
         count2 += 1
 
     return list1, list2, list3, list4

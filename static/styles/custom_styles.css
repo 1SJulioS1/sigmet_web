@@ -31,8 +31,14 @@ body {
     background-color: #071e22;
 }
 
-.btn {
+.btn-inicio {
     background-color: #faf3dd;
+}
+.button-color{
+    background-color: #e1e1e1;
+}
+.btn-circle {
+    border-radius: 15px;
 }
 
 .extracted {

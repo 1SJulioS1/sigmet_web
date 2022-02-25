@@ -1,4 +1,5 @@
 {% extends 'corp/base.html' %}
+{% load static %}
 <!--<style>
     .modal {
         display: none; /* Hidden by default */
@@ -48,13 +49,24 @@
                 <div class="row">
                     <div class="col-md-4">
                         <h4>Uso: {{ cant_uso }}</h4>
-                        <a href=""></a>
+                        <button type="button" id="btn_uso" class="btn button-color btn-icon-only"
+                                onclick="modal_function('{{ inst_uso|escapejs }}')">
+                            <i class="fa fa-angle-double-right"></i>
+                        </button>
                     </div>
                     <div class="col-md-4">
-                        <h4>Almacenados: {{ cant_alm }}</h4>
+                        <h4>Almacenados: </h4>
+                        <div class="btn-group">
+                            <button type="button" id="btn_alm" class="btn btn-outline-secondary"
+                                    onclick="modal_function('{{ inst_alm|escapejs }}')">{{ cant_alm }}</button>
+                        </div>
                     </div>
                     <div class="col-md-4">
-                        <h4>Rotos: {{ cant_roto }}</h4>
+                        <h4>Rotos:</h4>
+                        <div class="btn-group">
+                            <button type="button" id="btn_roto" class="btn btn-outline-secondary"
+                                    onclick="modal_function('{{ inst_roto|escapejs }}')">{{ cant_roto }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,8 +116,13 @@
             <div class="col-md-3">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        {% for f, ctd in lista1 %}
-                            <p class="card-text">{{ f }} : {{ ctd }}</p>
+                        {% for marca, ctd, dictionary in lista1 %}
+                            <p class="card-text">{{ marca }} : {{ ctd }}
+                                <button type="button" id="btn_uso" class="btn button-color btn-icon-only"
+                                            onclick="modal_function('{{ dictionary|escapejs }}')">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </button>
+                            </p>
                             <div class="dropdown-divider"></div>
                         {% endfor %}
                     </div>
@@ -114,8 +131,13 @@
             <div class="col-md-3">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        {% for f, ctd in lista2 %}
-                            <p class="card-text">{{ f }} : {{ ctd }}</p>
+                        {% for marca, ctd, dictionary in lista2 %}
+                            <p class="card-text">{{ marca }} : {{ ctd }}
+                                <button type="button" id="btn_uso" class="btn button-color btn-icon-only"
+                                            onclick="modal_function('{{ dictionary|escapejs }}')">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </button>
+                            </p>
                             <div class="dropdown-divider"></div>
                         {% endfor %}
                     </div>
@@ -124,8 +146,13 @@
             <div class="col-md-3">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        {% for f, ctd in lista3 %}
-                            <p class="card-text">{{ f }} : {{ ctd }}</p>
+                        {% for marca, ctd, dictionary in lista3 %}
+                            <p class="card-text">{{ marca }} : {{ ctd }}
+                                <button type="button" id="btn_uso" class="btn button-color btn-icon-only"
+                                            onclick="modal_function('{{ dictionary|escapejs }}')">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </button>
+                            </p>
                             <div class="dropdown-divider"></div>
                         {% endfor %}
                     </div>
@@ -134,91 +161,22 @@
             <div class="col-md-3">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        {% for f, ctd in lista4 %}
-                            <p class="card-text">{{ f }} : {{ ctd }}</p>
+                        {% for marca, ctd, dictionary in lista4 %}
+                            <p class="card-text">{{ marca }} : {{ ctd }}
+                                <button type="button" id="btn_uso" class="btn button-color btn-icon-only"
+                                            onclick="modal_function('{{ dictionary|escapejs }}')">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </button>
+                            </p>
                             <div class="dropdown-divider"></div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
-    <!--Modals-->
-
-    <div class="modal" id="modal_uso">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="inst_uso">Instrumentos en uso</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table id="tabla_uso" class="table">
-                        <thead>
-                        <tr>
-                            <th>Instrumento</th>
-                            <th>Empresa</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for k, v in inst_uso.items %}
-                            <tr>
-                                <td>{{ k }}</td>
-                                <td>{{ v }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--<div id="myModal" class="modal">-->
-    <!-- Modal content -->
-    <!--<div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
-    </div>
-</div>-->
-    <script>
-
-        var modal = document.getElementById("modal_uso");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal
-        btn.onclick = function () {
-            modal.style.display = "block";
-        };
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        };
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', function () {
-            let table = new DataTable('#tabla_uso', {
-                ordering: false,
-                info: false
-            });
-        });
-
-
-    </script>
-
 {% endblock %}
 
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'scripts/gen.js' %}"></script>
+{% endblock %}

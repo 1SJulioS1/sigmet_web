@@ -21,6 +21,7 @@
     <orderEntry type="module" module-name="proyecto" />
     <orderEntry type="module" module-name="proyecto" />
     <orderEntry type="module" module-name="excel_process" />
+    <orderEntry type="module" module-name="test" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
