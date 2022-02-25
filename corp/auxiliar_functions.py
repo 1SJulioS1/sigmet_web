@@ -217,13 +217,19 @@ def remove_duplicated_campanies():
 
 def obtener_instrumento_fabricante(instr):
     inst_fabr = dict()
-    inst_gen = dict()
     for i in instr:
         inst_fabr[i.instmarca] = 0
-    for i in inst_fabr:
-        ctd, d = inst_fabr[i.instmarca]
-        d = more_info(i, d)
-        inst_fabr[i.instmarca] = (ctd + 1, d)
+    for marca in inst_fabr:
+        inst_gen = dict()
+        contador = 0
+        for i in instr:
+            if i.instmarca == marca:
+                contador += 1
+                inst_gen = more_info(i, inst_gen)
+        aux = {
+            contador: inst_gen
+        }
+        inst_fabr[marca] = aux
     count = inst_fabr.__len__()
 
     list1 = []
@@ -233,18 +239,19 @@ def obtener_instrumento_fabricante(instr):
     count1 = count / 4
     count2 = 0
     for item in inst_fabr:
-        ctd, d = inst_fabr[item]
-        if count2 < count1:
-            list1.append((item, ctd, json.dumps(d)))
-        else:
-            if count2 < count1 * 2:
-                list2.append((item, ctd, json.dumps(d)))
+        new_dict = inst_fabr[item]
+        for item2 in new_dict:
+            if count2 < count1:
+                list1.append((item, item2, json.dumps(new_dict[item2])))
             else:
-                if count2 < count1 * 3:
-                    list3.append((item, ctd, json.dumps(d)))
+                if count2 < count1 * 2:
+                    list2.append((item, item2, json.dumps(new_dict[item2])))
                 else:
-                    if count2 < count1 * 4:
-                        list4.append((item, ctd, json.dumps(d)))
+                    if count2 < count1 * 3:
+                        list3.append((item, item2, json.dumps(new_dict[item2])))
+                    else:
+                        if count2 < count1 * 4:
+                            list4.append((item, item2, json.dumps(new_dict[item2])))
         count2 += 1
 
     return list1, list2, list3, list4
