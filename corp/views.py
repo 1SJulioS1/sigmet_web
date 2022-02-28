@@ -250,51 +250,51 @@ def instrumentos_trabajo_gen(request):
     miliohm_lista, ohm_lista, kiloohm_lista, megaohm_lista = instrumentos_medidores_resistencia(instr_trab)
 
     # Obtener instrumentos de tensiÃ³n existentes por niveles 1kV-5kV
-    count_1_kV = obtener_instrumentos_rango(-1000000, 1, 'kV', inst_tension_subset)
+    inst_1_kV = obtener_instrumentos_rango(-1000000, 1, 'kV', inst_tension_subset)
 
-    count_1_5_kV = obtener_instrumentos_rango(1, 5, 'kV', inst_tension_subset)
+    inst_1_5_kV = obtener_instrumentos_rango(1, 5, 'kV', inst_tension_subset)
 
     # Obtener instrumentos de tensiÃ³n existentes por niveles 5.1kV-10kV
-    count_5_10_kV = obtener_instrumentos_rango(5.1, 10, 'kV', inst_tension_subset)
+    inst_5_10_kV = obtener_instrumentos_rango(5.1, 10, 'kV', inst_tension_subset)
 
     # Obtener instrumentos de tensiÃ³n existentes por niveles 10.1kV-15kV
-    count_10_15_kV = obtener_instrumentos_rango(10.1, 15, 'kV', inst_tension_subset)
+    inst_10_15_kV = obtener_instrumentos_rango(10.1, 15, 'kV', inst_tension_subset)
 
     # Obtener instrumentos de tensiÃ³n existentes por niveles 15.1kV-150kV
-    count_15_150_kV = obtener_instrumentos_rango(15.1, 150, 'kV', inst_tension_subset)
+    inst_15_150_kV = obtener_instrumentos_rango(15.1, 150, 'kV', inst_tension_subset)
 
     # Obtener instrumentos de tensiÃ³n existentes por niveles 150.1kV-300kV
-    count_150_300_kV = obtener_instrumentos_rango(15.1, 300, 'kV', inst_tension_subset)
+    inst_150_300_kV = obtener_instrumentos_rango(15.1, 300, 'kV', inst_tension_subset)
 
     # Obtener instrumentos de tensiÃ³n existentes por niveles mas de 300kV
-    count_301_kV = obtener_instrumentos_rango(300, 1000000, 'kV', inst_tension_subset)
+    inst_301_kV = obtener_instrumentos_rango(300, 1000000, 'kV', inst_tension_subset)
 
     # Obtener instrumentos del grupo de magnitudes presion en el rango de 0Pa a 50Pa
-    count_0_50_Pa = obtener_instrumentos_rango(0, 50, 'Pa', instrumentos_grupo_presion)
+    inst_0_50_Pa = obtener_instrumentos_rango(0, 50, 'Pa', instrumentos_grupo_presion)
 
     # Obtener instrumentos del grupo de magnitudes presion en el rango de 1.1kPa a 7KPa
-    count_1_7_kPa = obtener_instrumentos_rango(1, 7, 'kPa', instrumentos_grupo_presion)
+    inst_1_7_kPa = obtener_instrumentos_rango(1, 7, 'kPa', instrumentos_grupo_presion)
 
     # Obtener instrumentos del grupo de magnitudes presion en el rango de 7.1kPa a 10kPa
-    count_7_10_kPa = obtener_instrumentos_rango(7.1, 10, 'kPa', instrumentos_grupo_presion)
+    inst_7_10_kPa = obtener_instrumentos_rango(7.1, 10, 'kPa', instrumentos_grupo_presion)
 
     # Obtener instrumentos del grupo de magnitudes presion en el rango de 10.1kPa a 20kPa
-    count_10_20_kPa = obtener_instrumentos_rango(10.1, 20, 'kPa', instrumentos_grupo_presion)
+    inst_10_20_kPa = obtener_instrumentos_rango(10.1, 20, 'kPa', instrumentos_grupo_presion)
 
     # Obtener instrumentos del grupo de magnitudes presion en el rango de 20.1kPa a 25kPa
-    count_20_25_kPa = obtener_instrumentos_rango(20.1, 25, 'kPa', instrumentos_grupo_presion)
+    inst_20_25_kPa = obtener_instrumentos_rango(20.1, 25, 'kPa', instrumentos_grupo_presion)
 
     # Obtener instrumentos con nombre micrometro en el rango hasta 100mm
-    count_micrometro_100_mm = obtener_instrumentos_rango(-1000000, 100, 'mm', instr_micrometro)
+    inst_micrometro_100_mm = obtener_instrumentos_rango(-1000000, 100, 'mm', instr_micrometro)
 
     # Obtener instrumentos con nombre micrometro en el rango entre  100mm y 500mm
-    count_micrometro_100_500_mm = obtener_instrumentos_rango(100.1, 500, 'mm', instr_micrometro)
+    inst_micrometro_100_500_mm = obtener_instrumentos_rango(100.1, 500, 'mm', instr_micrometro)
 
     # Obtener instrumentos con nombre micrometro en el rango entre  100mm y 500mm
-    count_micrometro_500_1000_mm = obtener_instrumentos_rango(500.1, 1000, 'mm', instr_micrometro)
+    inst_micrometro_500_1000_mm = obtener_instrumentos_rango(500.1, 1000, 'mm', instr_micrometro)
 
     # Obtener instrumentos con nombre micrometro en el rango entre  100mm y 500mm
-    count_micrometro_1000_mm = obtener_instrumentos_rango(1000.1, 1000000, 'mm', instr_micrometro)
+    inst_micrometro_1000_mm = obtener_instrumentos_rango(1000.1, 1000000, 'mm', instr_micrometro)
 
     dictionary = cantidad_inst_por_grupo(instr_trab, magns)
 
@@ -344,22 +344,22 @@ def instrumentos_trabajo_gen(request):
                    'count_mag_frec': count_mag_frec,
                    'inst_mag_frec_more_info': json.dumps(inst_mag_frec_more_info),
 
-                   'count_1_kV': count_1_kV,
-                   'count_1_5_V': count_1_5_kV,
-                   'count_5_10_kV': count_5_10_kV,
-                   'count_10_15_kV': count_10_15_kV,
-                   'count_15_150_kV': count_15_150_kV,
-                   'count_150_300_kV': count_150_300_kV,
-                   'count_301_kV': count_301_kV,
-                   'count_0_50_Pa': count_0_50_Pa,
-                   'count_1_7_kPa': count_1_7_kPa,
-                   'count_7_10_kPa': count_7_10_kPa,
-                   'count_10_20_kPa': count_10_20_kPa,
-                   'count_20_25_kPa': count_20_25_kPa,
-                   'count_micrometro_100_mm': count_micrometro_100_mm,
-                   'count_micrometro_100_500_mm': count_micrometro_100_500_mm,
-                   'count_micrometro_500_1000_mm': count_micrometro_500_1000_mm,
-                   'count_micrometro_1000_mm': count_micrometro_1000_mm,
+                   'inst_1_kV': inst_1_kV,
+                   'inst_1_5_V': inst_1_5_kV,
+                   'inst_5_10_kV': inst_5_10_kV,
+                   'inst_10_15_kV': inst_10_15_kV,
+                   'inst_15_150_kV': inst_15_150_kV,
+                   'inst_150_300_kV': inst_150_300_kV,
+                   'inst_301_kV': inst_301_kV,
+                   'inst_0_50_Pa': inst_0_50_Pa,
+                   'inst_1_7_kPa': inst_1_7_kPa,
+                   'inst_7_10_kPa': inst_7_10_kPa,
+                   'inst_10_20_kPa': inst_10_20_kPa,
+                   'inst_20_25_kPa': inst_20_25_kPa,
+                   'inst_micrometro_100_mm': inst_micrometro_100_mm,
+                   'inst_micrometro_100_500_mm': inst_micrometro_100_500_mm,
+                   'inst_micrometro_500_1000_mm': inst_micrometro_500_1000_mm,
+                   'inst_micrometro_1000_mm': inst_micrometro_1000_mm,
                    'electr': dictionary.get('elect'),
                    'presion': dictionary.get('presion'),
                    'temp': dictionary.get('temp'),

@@ -148,7 +148,7 @@
                             {% for k, v in ruido.items %}
                                 <br>{{ k }}
                                 <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
-                            {% endfor %}}
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -173,7 +173,10 @@
                     <div class="card-body">
                         <h4 class="card-title"> Medidores Armonicos</h4>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">{{ count_arm }}</p>
+                        <p class="card-text">{{ count_arm }}
+                            <i class="fa fa-plus"
+                               onclick="modal_function('{{ inst_armonico_more_info|escapejs }}')"></i>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -183,7 +186,10 @@
                     <div class="card-body">
                         <h4 class="card-title"> Medidores de Frecuencia</h4>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">{{ count_mag_frec }}</p>
+                        <p class="card-text">{{ count_mag_frec }}
+                            <i class="fa fa-plus"
+                               onclick="modal_function('{{ inst_mag_frec_more_info|escapejs }}')"></i>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -192,39 +198,61 @@
                     <div class="card-body">
                         <h4 class="card-title"> Medidores de Relación de Transformación</h4>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">{{ count_ttr }}</p>
-
+                        <p class="card-text">{{ count_ttr }}
+                            <i class="fa fa-plus" onclick="modal_function('{{ inst_ttr_more_info|escapejs }}')"></i>
+                        </p>
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h4 class="card-title"> Medidores Dimensionales</h4>
                         <div class="dropdown-divider"></div>
-
-                        <p class="card-text">Pie de rey: {{ count_pie_rey }} </p>
+                        <p class="card-text">Pie de rey: {{ count_pie_rey }}
+                            <i class="fa fa-plus" onclick="modal_function('{{ inst_pie_rey_more_info|escapejs }}')"></i>
+                        </p>
                         <div class="dropdown-divider"></div>
                         <p class="card-text">Pie de rey con magnitud especifica
-                            profundidad: {{ count_pie_rey_profundidad }} </p>
+                            profundidad: {{ count_pie_rey_profundidad }}
+                            <i class="fa fa-plus"
+                               onclick="modal_function('{{ inst_pie_rey_profundidad_more_info|escapejs }}')"></i>
+                        </p>
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h4 class="card-title"> Micrometros</h4>
                         <div class="dropdown-divider"></div>
-
-                        <p class="card-text">Hasta 100mm: {{ count_micrometro_100_mm }} </p>
+                        <p class="card-text">Hasta 100mm:
+                            {% for k, v in inst_micrometro_100_mm.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">De 100.1mm a 500mm: {{ count_micrometro_100_500_mm }} </p>
+                        <p class="card-text">De 100.1mm a 500mm:
+                            {% for k, v in inst_micrometro_100_500_mm.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">De 500.1mm a 1000mm: {{ count_micrometro_500_1000_mm }} </p>
+                        <p class="card-text">De 500.1mm a 1000mm:
+                            {% for k, v in inst_micrometro_500_1000_mm.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">Mas de 1000mm: {{ count_micrometro_1000_mm }} </p>
+                        <p class="card-text">Mas de 1000mm:
+                            {% for k, v in inst_micrometro_1000_mm.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -234,19 +262,54 @@
                         <h4 class="card-title"> Tension</h4>
                         <div class="dropdown-divider"></div>
 
-                        <p class="card-text">Hasta 1 kV: {{ count_1_kV }}</p>
+                        <p class="card-text">Hasta 1 kV:
+                            {% for k, v in inst_1_kV.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">De 1kV a 5kV: {{ count_1_5_V }}</p>
+                        <p class="card-text">De 1kV a 5kV:
+                            {% for k, v in inst_1_5_V.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">De 5.1kV a 10kV: {{ count_5_10_kV }}</p>
+                        <p class="card-text">De 5.1kV a 10kV:
+                            {% for k, v in inst_5_10_kV.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">De 10.1kV a 15kV: {{ count_10_15_kV }}</p>
+                        <p class="card-text">De 10.1kV a 15kV:
+                            {% for k, v in inst_10_15_kV.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">De 15.1kV a 150kV: {{ count_15_150_kV }}</p>
+                        <p class="card-text">De 15.1kV a 150kV:
+                            {% for k, v in inst_15_150_kV.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">De 150.1kV a 300kV: {{ count_150_300_kV }}</p>
+                        <p class="card-text">De 150.1kV a 300kV:
+                            {% for k, v in inst_150_300_kV.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">De mas de 300kV: {{ count_301_kV }}</p>
+                        <p class="card-text">De mas de 300kV:
+                            {% for k, v in inst_301_kV.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
 
                     </div>
                 </div>
@@ -257,18 +320,38 @@
                         <h4 class="card-title"> Otros</h4>
                         <div class="dropdown-divider"></div>
 
-                        <p class="card-text">Cintas metricas: {{ count_cintas }}</p>
+                        <p class="card-text">Cintas metricas:
+                            {{ count_cintas }}
+                            <i class="fa fa-plus" onclick="modal_function('{{ inst_cintas_more_info|escapejs }}')"></i>
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">Medidores de nivel: {{ count_medidor_nivel }}</p>
+                        <p class="card-text">Medidores de nivel:
+                            {{ count_medidor_nivel }}
+                            <i class="fa fa-plus"
+                               onclick="modal_function('{{ inst_medidor_nivel_more_info|escapejs }}')"></i>
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">Medidores de angulos: {{ count_medidor_angulo }} </p>
+                        <p class="card-text">Medidores de angulos:
+                            {{ count_medidor_angulo }}
+                            <i class="fa fa-plus"
+                               onclick="modal_function('{{ inst_medidor_angulo_more_info|escapejs }}')"></i>
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">Comparadores de caratulas: {{ count_comparador_caratula }}</p>
+                        <p class="card-text">Comparadores de caratulas:
+                            {{ count_comparador_caratula }}
+                            <i class="fa fa-plus"
+                               onclick="modal_function('{{ inst_comparador_caraturla_more_info|escapejs }}')"></i>
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">Reglas: {{ count_regla }}</p>
+                        <p class="card-text">Reglas:
+                            {{ count_regla }}
+                            <i class="fa fa-plus" onclick="modal_function('{{ inst_regla_more_info|escapejs }}')"></i>
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text">Galgas: {{ count_galga }}</p>
-
+                        <p class="card-text">Galgas:
+                            {{ count_galga }}
+                            <i class="fa fa-plus" onclick="modal_function('{{ inst_galga_more_info|escapejs }}')"></i>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -278,17 +361,46 @@
                         <h4 class="card-title"> Medidores de Presion</h4>
                         <div class="dropdown-divider"></div>
 
-                        <p class="card-text">Vacuometros: {{ count_vacuometro }}</p>
+                        <p class="card-text">Vacuometros:
+                            {{ count_vacuometro }}
+                            <i class="fa fa-plus"
+                               onclick="modal_function('{{ inst_vacuometro_more_info|escapejs }}')"></i>
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text"> De 0Pa a 50Pa: {{ count_0_50_Pa }}</p>
+                        <p class="card-text"> De 0Pa a 50Pa:
+                            {% for k, v in inst_0_50_Pa.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text"> De 1.1kPa a 7kPa: {{ count_1_7_kPa }}</p>
+                        <p class="card-text"> De 1.1kPa a 7kPa:
+                            {% for k, v in inst_1_7_kPa.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text"> De 7.1kPa a 10kPa: {{ count_7_10_kPa }}</p>
+                        <p class="card-text"> De 7.1kPa a 10kPa:
+                            {% for k, v in inst_7_10_kPa.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text"> De 10.1kPa a 20kPa: {{ count_10_20_kPa }}</p>
+                        <p class="card-text"> De 10.1kPa a 20kPa:
+                            {% for k, v in inst_10_20_kPa.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                         <div class="dropdown-divider"></div>
-                        <p class="card-text"> De 20.1kPa a 25kPa: {{ count_20_25_kPa }}</p>
+                        <p class="card-text"> De 20.1kPa a 25kPa:
+                            {% for k, v in inst_20_25_kPa.items %}
+                                {{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
+                        </p>
                     </div>
                 </div>
             </div>

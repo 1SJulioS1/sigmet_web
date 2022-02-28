@@ -12,6 +12,7 @@ def obtener_instrumentos_rango(minimo, maximo, unidad_de_medicion, instrument_su
         instrument_subset = Instrumentos.objects.all()
     rel = Relacionmagnitudesunidadesmedicion.objects.all()
     caract_met = Caracteristicasmetrologicas.objects.all()
+    d = dict()
     try:
         unimed = Unidadesmedicion.objects.filter(unimedsim=unidad_de_medicion)
         rango = Rangosmedicion.objects.all()
@@ -29,11 +30,12 @@ def obtener_instrumentos_rango(minimo, maximo, unidad_de_medicion, instrument_su
                                     for i in instrument_subset:
                                         if cm.idinst_id == i.idinst:
                                             count += 1
+                                            d = more_info(i, d)
                                             break
     except Unidadesmedicion.DoesNotExist:
-        count = 0
+        return {0: json.dumps(dict())}
 
-    return count
+    return {count: json.dumps(d)}
 
 
 def instrumentos_por_magnitud():
@@ -160,19 +162,19 @@ def cantidad_inst_por_grupo(instr, magnitudes):
                                                                     d_ilum = more_info(i, d_ilum)
 
     dictionary = {
-        'elect': {elect: d_elect},
-        'presion': {presion: d_presion},
-        'temp': {temp: d_tmp},
-        'flujo': {flujo: d_flujo},
-        'volumen': {volumen: d_vol},
-        'dim': {dim: d_dim},
-        'masa': {masa: d_masa},
-        'fuerza': {fuerza: d_fuerza},
-        'fis_quim': {fis_quim: d_fq},
-        'dureza': {dureza: d_dureza},
-        'vibr': {vibr: d_vibr},
-        'ruido': {ruido: d_ruido},
-        'ilum': {ilum: d_ilum},
+        'elect': {elect: json.dumps(d_elect)},
+        'presion': {presion: json.dumps(d_presion)},
+        'temp': {temp: json.dumps(d_tmp)},
+        'flujo': {flujo: json.dumps(d_flujo)},
+        'volumen': {volumen: json.dumps(d_vol)},
+        'dim': {dim: json.dumps(d_dim)},
+        'masa': {masa: json.dumps(d_masa)},
+        'fuerza': {fuerza: json.dumps(d_fuerza)},
+        'fis_quim': {fis_quim: json.dumps(d_fq)},
+        'dureza': {dureza: json.dumps(d_dureza)},
+        'vibr': {vibr: json.dumps(d_vibr)},
+        'ruido': {ruido: json.dumps(d_ruido)},
+        'ilum': {ilum: json.dumps(d_ilum)},
     }
 
     return dictionary
