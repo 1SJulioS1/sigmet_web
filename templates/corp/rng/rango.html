@@ -19,8 +19,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Electricidad
-                            <br>{{ cant_electr }}
-                            <i class="fa fa-plus" onclick="modal_function('{{ inst_per_comp|escapejs }}')"></i>
+                            {% for k, v in electr.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -29,7 +31,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Presión
-                            <br>{{ cant_presion }}
+                            {% for k, v in presion.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -38,7 +43,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Temperatura
-                            <br>{{ cant_temp }}
+                            {% for k, v in temp.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -47,7 +55,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Flujo/Gasto
-                            <br>{{ cant_flujo }}
+                            {% for k, v in flujo.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -59,7 +70,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Volumen
-                            <br>{{ cant_volumen }}
+                            {% for k, v in volumen.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -68,7 +82,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Dimensional
-                            <br>{{ cant_dim }}
+                            {% for k, v in dim.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -77,7 +94,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Masa
-                            <br>{{ cant_masa }}
+                            {% for k, v in masa.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -86,7 +106,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Fuerza
-                            <br>{{ cant_fuerza }}
+                            {% for k, v in masa.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -98,7 +121,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Fisico/Quimico
-                            <br>{{ cant_fis_quim }}
+                            {% for k, v in fis_quim.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -107,7 +133,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Vibraciones
-                            <br>{{ cant_vibr }}
+                            {% for k, v in vibr.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>
@@ -116,7 +145,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Ruidos/Sonómetros
-                            <br>{{ cant_ruido }}
+                            {% for k, v in ruido.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}}
                         </h5>
                     </div>
                 </div>
@@ -125,7 +157,10 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Iluminación/Luxómetros
-                            <br>{{ cant_ilum }}
+                            {% for k, v in ilum.items %}
+                                <br>{{ k }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ v|escapejs }}')"></i>
+                            {% endfor %}
                         </h5>
                     </div>
                 </div>

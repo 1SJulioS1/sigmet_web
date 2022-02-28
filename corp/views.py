@@ -1,4 +1,3 @@
-import json
 import os
 
 from django.contrib.auth import authenticate, login, logout
@@ -185,9 +184,6 @@ def instrumentos_trabajo_gen(request):
     count_mag_frec = 0
     inst_mag_frec_more_info = dict()
 
-    cant_presion = 0
-    inst_presion_more_info = dict()
-
     inst_tension_subset = []
     instr_micrometro = []
     instrumentos_grupo_presion = []
@@ -250,12 +246,6 @@ def instrumentos_trabajo_gen(request):
                     if m.idmag == ins.idmag_id and m.magiddb == ins.magiddb_id:
                         count_mag_frec += 1
                         inst_mag_frec_more_info = more_info(ins, inst_mag_frec_more_info)
-                else:
-                    if m.grpmagnom.grpmagnom == 'Presión':
-                        if m.idmag == ins.idmag_id and m.magiddb == ins.magiddb_id:
-                            instrumentos_grupo_presion.append(ins)
-                            cant_presion += 1
-                            inst_presion_more_info = more_info(ins, inst_presion_more_info)
 
     miliohm_lista, ohm_lista, kiloohm_lista, megaohm_lista = instrumentos_medidores_resistencia(instr_trab)
 
@@ -310,53 +300,50 @@ def instrumentos_trabajo_gen(request):
 
     return render(request, 'corp/rng/rango.html',
                   {'cant_trab': cant_trab,
-
                    'inst_trab_more_info': json.dumps(inst_trab_more_info),
+
                    'count_vacuometro': count_vacuometro,
-
                    'inst_vacuometro_more_info': json.dumps(inst_vacuometro_more_info),
+
                    'count_pie_rey': count_pie_rey,
-
                    'inst_pie_rey_more_info': json.dumps(inst_pie_rey_more_info),
+
                    'count_pie_rey_profundidad': count_pie_rey_profundidad,
-
                    'inst_pie_rey_profundidad_more_info': json.dumps(inst_pie_rey_profundidad_more_info),
+
                    'count_micrometro': count_micrometro,
-
                    'inst_micrometro_more_info': json.dumps(inst_micrometro_more_info),
+
                    'count_cintas': cant_cintas,
-
                    'inst_cintas_more_info': json.dumps(inst_cintas_more_info),
+
                    'count_medidor_nivel': cant_medidor_nivel,
-
                    'inst_medidor_nivel_more_info': json.dumps(inst_medidor_nivel_more_info),
+
                    'count_medidor_angulo': cant_medidor_angulo,
-
                    'inst_medidor_angulo_more_info': json.dumps(inst_medidor_angulo_more_info),
+
                    'count_comparador_caratula': cant_comparador_caratula,
-
                    'inst_comparador_caraturla_more_info': json.dumps(inst_comparador_caraturla_more_info),
+
                    'count_regla': cant_regla,
-
                    'inst_regla_more_info': json.dumps(inst_regla_more_info),
+
                    'count_galga': cant_galga,
-
                    'inst_galga_more_info': json.dumps(inst_galga_more_info),
+
                    'count_ttr': cant_ttr,
-
                    'inst_ttr_more_info': json.dumps(inst_ttr_more_info),
+
                    'count_arm': cant_armonico,
-
                    'inst_armonico_more_info': json.dumps(inst_armonico_more_info),
+
                    'count_multif': cant_multif,
-
                    'inst_multif_more_info': json.dumps(inst_multif_more_info),
+
                    'count_mag_frec': count_mag_frec,
-
                    'inst_mag_frec_more_info': json.dumps(inst_mag_frec_more_info),
-                   'cant_presion': cant_presion,
 
-                   'inst_presion_more_info': json.dumps(inst_presion_more_info),
                    'count_1_kV': count_1_kV,
                    'count_1_5_V': count_1_5_kV,
                    'count_5_10_kV': count_5_10_kV,
@@ -373,17 +360,18 @@ def instrumentos_trabajo_gen(request):
                    'count_micrometro_100_500_mm': count_micrometro_100_500_mm,
                    'count_micrometro_500_1000_mm': count_micrometro_500_1000_mm,
                    'count_micrometro_1000_mm': count_micrometro_1000_mm,
-                   'cant_electr': dictionary.get('cant_elect'),
-                   'cant_temp': dictionary.get('cant_temp'),
-                   'cant_flujo': dictionary.get('cant_flujo'),
-                   'cant_volumen': dictionary.get('cant_volumen'),
-                   'cant_dim': dictionary.get('cant_dim'),
-                   'cant_masa': dictionary.get('cant_masa'),
-                   'cant_fuerza': dictionary.get('cant_fuerza'),
-                   'cant_fis_quim': dictionary.get('cant_fis_quim'),
-                   'cant_vibr': dictionary.get('cant_vibr'),
-                   'cant_ruido': dictionary.get('cant_ruido'),
-                   'cant_ilum': dictionary.get('cant_ilum'),
+                   'electr': dictionary.get('elect'),
+                   'presion': dictionary.get('presion'),
+                   'temp': dictionary.get('temp'),
+                   'flujo': dictionary.get('flujo'),
+                   'volumen': dictionary.get('volumen'),
+                   'dim': dictionary.get('dim'),
+                   'masa': dictionary.get('masa'),
+                   'fuerza': dictionary.get('fuerza'),
+                   'fis_quim': dictionary.get('fis_quim'),
+                   'vibr': dictionary.get('vibr'),
+                   'ruido': dictionary.get('ruido'),
+                   'ilum': dictionary.get('ilum'),
                    'miliohm': miliohm_lista,
                    'ohm': ohm_lista,
                    'kiloohm': kiloohm_lista,
@@ -510,9 +498,9 @@ def patrones(request):
 
     dictionary = cantidad_inst_por_grupo(instr_patr, magnitudes)
 
-    instr_patr_elect = dictionary.get('instr_patr_elect')
-    instr_patr_pres = dictionary.get('instr_patr_pres')
-    instr_patr_temp = dictionary.get('instr_patr_temp')
+    instr_patr_elect = dictionary.get('elect')
+    instr_patr_pres = dictionary.get('pres')
+    instr_patr_temp = dictionary.get('temp')
 
     cant_electr_intensidad, cant_electr_tension, cant_electr_resistencia = cantidad_patrones_por_magnitud(
         instr_patr_elect, magnitudes)
@@ -577,7 +565,7 @@ def patrones(request):
                                                        'cant_patr_ener_trab': cant_patr_ener_trab,
                                                        'inst_patr_ener_trab_more_info': json.dumps(
                                                            inst_patr_ener_trab_more_info),
-                                                       'cant_electr': dictionary.get('cant_elect'),
+                                                       'cant_electr': dictionary.get('elect'),
                                                        'cant_electr_intensidad': cant_electr_intensidad,
                                                        'cant_electr_tension': cant_electr_tension,
                                                        'cant_electr_resistencia': cant_electr_resistencia,
@@ -585,18 +573,18 @@ def patrones(request):
                                                        'cant_rel_trans': cant_rel_trans,
                                                        'inst_rel_trans': json.dumps(inst_rel_trans),
 
-                                                       'cant_presion': dictionary.get('cant_presion'),
+                                                       'cant_presion': dictionary.get('presion'),
                                                        'cant_presion_1mpa': cant_presion_1mpa,
                                                        'cant_presion_1_10': cant_presion_1_10,
                                                        'cant_presion_10_100': cant_presion_10_100,
                                                        'cant_presion_100_250': cant_presion_100_250,
-                                                       'cant_temp': dictionary.get('cant_temp'),
+                                                       'cant_temp': dictionary.get('temp'),
                                                        'cant_temp_100': cant_temp_100,
                                                        'cant_temp_100_500': cant_temp_100_500,
                                                        'cant_temp_500_1000': cant_temp_500_1000,
                                                        'cant_temp_1000_2000': cant_temp_1000_2000,
                                                        'cant_patr_dimensional': dictionary.get('cant_dim'),
-                                                       'cant_patr_dureza': dictionary.get('cant_dureza'),
+                                                       'cant_patr_dureza': dictionary.get('dureza'),
 
                                                        'cant_patr_metalografico': cant_patr_metalograficos,
                                                        # New
@@ -605,14 +593,14 @@ def patrones(request):
                                                        'cant_patr_quimicos': cant_patr_quimicos,
                                                        'inst_patr_quimicos_more_info': inst_patr_quimicos_more_info,
 
-                                                       'cant_flujo': dictionary.get('cant_flujo'),
-                                                       'cant_volumen': dictionary.get('cant_volumen'),
-                                                       'cant_masa': dictionary.get('cant_masa'),
-                                                       'cant_fuerza': dictionary.get('cant_fuerza'),
-                                                       'cant_fis_quim': dictionary.get('cant_fis_quim'),
-                                                       'cant_vibr': dictionary.get('cant_vibr'),
-                                                       'cant_ruido': dictionary.get('cant_ruido'),
-                                                       'cant_ilum': dictionary.get('cant_ilum'),
+                                                       'cant_flujo': dictionary.get('flujo'),
+                                                       'cant_volumen': dictionary.get('volumen'),
+                                                       'cant_masa': dictionary.get('masa'),
+                                                       'cant_fuerza': dictionary.get('fuerza'),
+                                                       'cant_fis_quim': dictionary.get('fis_quim'),
+                                                       'cant_vibr': dictionary.get('vibr'),
+                                                       'cant_ruido': dictionary.get('ruido'),
+                                                       'cant_ilum': dictionary.get('ilum'),
                                                        })
 
 

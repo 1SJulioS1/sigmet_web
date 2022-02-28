@@ -60,74 +60,93 @@ def instrumentos_por_magnitud():
     return inst_per_mag_per_group
 
 
-def cantidad_inst_por_grupo(instr_patr, magnitudes):
-    instr_patr_elect = []
-    cant_elect = 0
-    instr_patr_pres = []
-    cant_presion = 0
-    instr_patr_temp = []
-    cant_temp = 0
-    cant_flujo = 0
-    cant_volumen = 0
-    cant_dim = 0
-    cant_masa = 0
-    cant_fuerza = 0
-    cant_fis_quim = 0
-    cant_dureza = 0
-    cant_vibr = 0
-    cant_ruido = 0
-    cant_ilum = 0
+def cantidad_inst_por_grupo(instr, magnitudes):
+    elect = 0
+    d_elect = dict()
+    presion = 0
+    d_presion = dict()
+    temp = 0
+    d_tmp = dict()
+    flujo = 0
+    d_flujo = dict()
+    volumen = 0
+    d_vol = dict()
+    dim = 0
+    d_dim = dict()
+    masa = 0
+    d_masa = dict()
+    fuerza = 0
+    d_fuerza = dict()
+    fis_quim = 0
+    d_fq = dict()
+    dureza = 0
+    d_dureza = dict()
+    vibr = 0
+    d_vibr = dict()
+    ruido = 0
+    d_ruido = dict()
+    ilum = 0
+    d_ilum = dict()
 
-    for ip in instr_patr:
+    for i in instr:
         for me in magnitudes:
-            if ip.idmag_id == me.idmag and ip.magiddb_id == me.magiddb:
+            if i.idmag_id == me.idmag and i.magiddb_id == me.magiddb:
                 if str(me.grpmagnom.grpmagnom).lower() == 'electricidad':
-                    cant_elect += 1
-                    instr_patr_elect.append(ip)
+                    elect += 1
+                    d_elect = more_info(i, d_elect)
                 else:
                     if str(me.grpmagnom.grpmagnom).lower() == 'presión':
-                        cant_presion += 1
-                        instr_patr_pres.append(ip)
+                        presion += 1
+                        d_presion = more_info(i, d_presion)
                     else:
                         if str(me.grpmagnom.grpmagnom).lower() == 'temperatura':
-                            cant_temp += 1
-                            instr_patr_temp.append(ip)
+                            temp += 1
+                            d_tmp = more_info(i, d_tmp)
                         else:
                             if str(me.grpmagnom.grpmagnom).lower() == 'dimensional':
-                                cant_dim += 1
+                                dim += 1
+                                d_dim = more_info(i, d_dim)
                             else:
                                 if str(me.grpmagnom.grpmagnom).lower() == 'dureza':
-                                    cant_dureza += 1
+                                    dureza += 1
+                                    d_dureza = more_info(i, d_dureza)
                                 else:
                                     if str(me.grpmagnom.grpmagnom).lower() == 'flujo/gasto' or \
                                             str(me.grpmagnom.grpmagnom).lower() == 'flujo' or \
                                             str(me.grpmagnom.grpmagnom).lower() == 'gasto':
-                                        cant_flujo += 1
+                                        flujo += 1
+                                        d_flujo = more_info(i, d_flujo)
                                     else:
                                         if str(me.grpmagnom.grpmagnom).lower() == 'volumen' or \
                                                 str(me.grpmagnom.grpmagnom).lower() == 'volúmen':
-                                            cant_volumen += 1
+                                            volumen += 1
+                                            d_vol = more_info(i, d_vol)
                                         else:
                                             if str(me.grpmagnom.grpmagnom).lower() == 'masa':
-                                                cant_masa += 1
+                                                masa += 1
+                                                d_masa = more_info(i, d_masa)
                                             else:
                                                 if str(me.grpmagnom.grpmagnom).lower().__contains__('fuerza'):
-                                                    cant_fuerza += 1
+                                                    fuerza += 1
+                                                    d_fuerza = more_info(i, d_fuerza)
                                                 else:
                                                     if str(me.grpmagnom.grpmagnom).lower() == 'vibraciones' or \
                                                             str(me.grpmagnom.grpmagnom).lower() == 'vibración' or \
                                                             str(me.grpmagnom.grpmagnom).lower() == 'vibracion':
-                                                        cant_vibr += 1
+                                                        vibr += 1
+                                                        d_vibr = more_info(i, d_vibr)
                                                     else:
                                                         if str(me.grpmagnom.grpmagnom).lower() == 'fisico-quimico' or \
                                                                 str(me.grpmagnom.grpmagnom).lower() == 'físico-químico':
-                                                            cant_fis_quim += 1
+                                                            fis_quim += 1
+                                                            d_fq = more_info(i, d_fq)
                                                         else:
                                                             if str(
                                                                     me.grpmagnom.grpmagnom).lower() == 'ruidos-sonometros' or \
                                                                     str(
                                                                         me.grpmagnom.grpmagnom).lower() == 'ruidos-sonómetros':
-                                                                cant_ruido += 1
+                                                                ruido += 1
+                                                                d_ruido = more_info(i, d_ruido)
                                                             else:
                                                                 if str(
                                                                         me.grpmagnom.grpmagnom).lower() == 'iluminacion-luxometros' or \
@@ -137,25 +156,23 @@ def cantidad_inst_por_grupo(instr_patr, magnitudes):
                                                                             me.grpmagnom.grpmagnom).lower() == 'iluminacion-luxómetros' or \
                                                                         str(
                                                                             me.grpmagnom.grpmagnom).lower() == 'iluminación-luxometros':
-                                                                    cant_ilum += 1
+                                                                    ilum += 1
+                                                                    d_ilum = more_info(i, d_ilum)
 
     dictionary = {
-        'instr_patr_elect': instr_patr_elect,
-        'cant_elect': cant_elect,
-        'instr_patr_pres': instr_patr_pres,
-        'cant_presion': cant_presion,
-        'instr_patr_temp': instr_patr_temp,
-        'cant_temp': cant_temp,
-        'cant_flujo': cant_flujo,
-        'cant_volumen': cant_volumen,
-        'cant_dim': cant_dim,
-        'cant_masa': cant_masa,
-        'cant_fuerza': cant_fuerza,
-        'cant_fis_quim': cant_fis_quim,
-        'cant_dureza': cant_dureza,
-        'cant_vibr': cant_vibr,
-        'cant_ruido': cant_ruido,
-        'cant_ilum': cant_ilum,
+        'elect': {elect: d_elect},
+        'presion': {presion: d_presion},
+        'temp': {temp: d_tmp},
+        'flujo': {flujo: d_flujo},
+        'volumen': {volumen: d_vol},
+        'dim': {dim: d_dim},
+        'masa': {masa: d_masa},
+        'fuerza': {fuerza: d_fuerza},
+        'fis_quim': {fis_quim: d_fq},
+        'dureza': {dureza: d_dureza},
+        'vibr': {vibr: d_vibr},
+        'ruido': {ruido: d_ruido},
+        'ilum': {ilum: d_ilum},
     }
 
     return dictionary
