@@ -447,31 +447,24 @@ def patrones(request):
     instr_patr = []
 
     cant_patr = 0
-    # New
     inst_patr_more_info = dict()
 
     cant_energia_monofasico = 0
-    # New
     inst_energia_monofasico_more_info = dict()
 
     cant_energia_trifasico = 0
-    # New
     inst_energia_trifasico_more_info = dict()
 
     cant_patr_ener_trab = 0
-    # New
     inst_patr_ener_trab_more_info = dict()
 
     cant_rel_trans = 0
-    # New
     inst_rel_trans = dict()
 
     cant_patr_metalograficos = 0
-    # New
     inst_patr_metalograficos_more_info = dict()
 
     cant_patr_quimicos = 0
-    # New
     inst_patr_quimicos_more_info = dict()
 
     for isin in instr_single:
@@ -574,26 +567,23 @@ def patrones(request):
             inst_patr_quimicos_more_info = more_info(ip, inst_patr_quimicos_more_info)
 
     return render(request, 'corp/patron/patron.html', {'cant_patr': cant_patr,
-                                                       # New
-                                                       'inst_patr_more_info': inst_patr_more_info,
+                                                       'inst_patr_more_info': json.dumps(inst_patr_more_info),
                                                        'cant_energia_monofasico': cant_energia_monofasico,
-                                                       # New
-                                                       'inst_energia_monofasico_more_info': inst_energia_monofasico_more_info,
-
+                                                       'inst_energia_monofasico_more_info': json.dumps(
+                                                           inst_energia_monofasico_more_info),
                                                        'cant_energia_trifasico': cant_energia_trifasico,
-                                                       # New
-                                                       'inst_energia_trifasico_more_info': inst_energia_trifasico_more_info,
+                                                       'inst_energia_trifasico_more_info': json.dumps(
+                                                           inst_energia_trifasico_more_info),
                                                        'cant_patr_ener_trab': cant_patr_ener_trab,
-                                                       # New
-                                                       'inst_patr_ener_trab_more_info': inst_patr_ener_trab_more_info,
+                                                       'inst_patr_ener_trab_more_info': json.dumps(
+                                                           inst_patr_ener_trab_more_info),
                                                        'cant_electr': dictionary.get('cant_elect'),
                                                        'cant_electr_intensidad': cant_electr_intensidad,
                                                        'cant_electr_tension': cant_electr_tension,
                                                        'cant_electr_resistencia': cant_electr_resistencia,
 
                                                        'cant_rel_trans': cant_rel_trans,
-                                                       # New
-                                                       'inst_rel_trans': inst_rel_trans,
+                                                       'inst_rel_trans': json.dumps(inst_rel_trans),
 
                                                        'cant_presion': dictionary.get('cant_presion'),
                                                        'cant_presion_1mpa': cant_presion_1mpa,
@@ -613,7 +603,6 @@ def patrones(request):
                                                        'inst_patr_metalograficos_more_info': inst_patr_metalograficos_more_info,
 
                                                        'cant_patr_quimicos': cant_patr_quimicos,
-                                                       # New
                                                        'inst_patr_quimicos_more_info': inst_patr_quimicos_more_info,
 
                                                        'cant_flujo': dictionary.get('cant_flujo'),
