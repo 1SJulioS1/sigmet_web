@@ -427,8 +427,6 @@ def instrumentos_trabajo_fabr(request):
 
 
 def patrones(request):
-    instrumentos = Instrumentos.objects.all()
-
     # Determinar cantidad de instrumentos que sean patrones
 
     instr_single = remove_duplicated_instruments()
@@ -456,7 +454,7 @@ def patrones(request):
     inst_patr_quimicos_more_info = dict()
 
     for isin in instr_single:
-        if isin.catusonom.catusonom == 'PatrÃ³n':
+        if isin.catusonom.catusonom == 'Patrón':
             instr_patr.append(isin)
             cant_patr += 1
             inst_patr_more_info = more_info(isin, inst_patr_more_info)
@@ -498,9 +496,9 @@ def patrones(request):
 
     dictionary = cantidad_inst_por_grupo(instr_patr, magnitudes)
 
-    instr_patr_elect = dictionary.get('elect')
-    instr_patr_pres = dictionary.get('pres')
-    instr_patr_temp = dictionary.get('temp')
+    instr_patr_elect = dictionary.get('inst_elect')
+    instr_patr_pres = dictionary.get('inst_presion')
+    instr_patr_temp = dictionary.get('inst_tmp')
 
     cant_electr_intensidad, cant_electr_tension, cant_electr_resistencia = cantidad_patrones_por_magnitud(
         instr_patr_elect, magnitudes)
@@ -514,28 +512,28 @@ def patrones(request):
             cant_rel_trans += 1
             inst_rel_trans = more_info(ip, inst_rel_trans)
     # Determinar cantidad de patrones de presion hasta 1MPa
-    cant_presion_1mpa = obtener_instrumentos_rango(-1000000, 1, 'MPa', instr_patr_pres)
+    presion_1mpa = obtener_instrumentos_rango(-1000000, 1, 'MPa', instr_patr_pres)
 
     # Determinar cantidad de patrones de presion hasta 1.1MPa a 10MPa
-    cant_presion_1_10 = obtener_instrumentos_rango(1.1, 10, 'MPa', instr_patr_pres)
+    presion_1_10 = obtener_instrumentos_rango(1.1, 10, 'MPa', instr_patr_pres)
 
     # Determinar cantidad de patrones de presion hasta 10.1MPa a 100MPa
-    cant_presion_10_100 = obtener_instrumentos_rango(10.1, 100, 'MPa', instr_patr_pres)
+    presion_10_100 = obtener_instrumentos_rango(10.1, 100, 'MPa', instr_patr_pres)
 
     # Determinar cantidad de patrones de presion hasta 100.1MPa a 250MPa
-    cant_presion_100_250 = obtener_instrumentos_rango(100.1, 250, 'MPa', instr_patr_pres)
+    presion_100_250 = obtener_instrumentos_rango(100.1, 250, 'MPa', instr_patr_pres)
 
     # Determinar cantidad de patrones de temperatura hasta 100 grados
-    cant_temp_100 = obtener_instrumentos_rango(-1000000, 100, 'ÂºC', instr_patr_temp)
+    temp_100 = obtener_instrumentos_rango(-1000000, 100, 'ÂºC', instr_patr_temp)
 
     # Determinar cantidad de patrones de temperatura de 100 grados a 500grados
-    cant_temp_100_500 = obtener_instrumentos_rango(100.1, 500, 'ÂºC', instr_patr_temp)
+    temp_100_500 = obtener_instrumentos_rango(100.1, 500, 'ÂºC', instr_patr_temp)
 
     # Determinar cantidad de patrones de temperatura de 500grados a 1000grados
-    cant_temp_500_1000 = obtener_instrumentos_rango(500.1, 1000, 'ÂºC', instr_patr_temp)
+    temp_500_1000 = obtener_instrumentos_rango(500.1, 1000, 'ÂºC', instr_patr_temp)
 
     # Determinar cantidad de patrones de temperatura de 1000grados a 2000grados
-    cant_temp_1000_2000 = obtener_instrumentos_rango(1000.1, 2000, 'ÂºC', instr_patr_temp)
+    temp_1000_2000 = obtener_instrumentos_rango(1000.1, 2000, 'ÂºC', instr_patr_temp)
 
     # Determinar cantidad de patrones de ensayos metalograficos
 
@@ -565,7 +563,7 @@ def patrones(request):
                                                        'cant_patr_ener_trab': cant_patr_ener_trab,
                                                        'inst_patr_ener_trab_more_info': json.dumps(
                                                            inst_patr_ener_trab_more_info),
-                                                       'cant_electr': dictionary.get('elect'),
+                                                       'electr': dictionary.get('elect'),
                                                        'cant_electr_intensidad': cant_electr_intensidad,
                                                        'cant_electr_tension': cant_electr_tension,
                                                        'cant_electr_resistencia': cant_electr_resistencia,
@@ -573,18 +571,18 @@ def patrones(request):
                                                        'cant_rel_trans': cant_rel_trans,
                                                        'inst_rel_trans': json.dumps(inst_rel_trans),
 
-                                                       'cant_presion': dictionary.get('presion'),
-                                                       'cant_presion_1mpa': cant_presion_1mpa,
-                                                       'cant_presion_1_10': cant_presion_1_10,
-                                                       'cant_presion_10_100': cant_presion_10_100,
-                                                       'cant_presion_100_250': cant_presion_100_250,
-                                                       'cant_temp': dictionary.get('temp'),
-                                                       'cant_temp_100': cant_temp_100,
-                                                       'cant_temp_100_500': cant_temp_100_500,
-                                                       'cant_temp_500_1000': cant_temp_500_1000,
-                                                       'cant_temp_1000_2000': cant_temp_1000_2000,
-                                                       'cant_patr_dimensional': dictionary.get('cant_dim'),
-                                                       'cant_patr_dureza': dictionary.get('dureza'),
+                                                       'presion': dictionary.get('presion'),
+                                                       'presion_1mpa': presion_1mpa,
+                                                       'presion_1_10': presion_1_10,
+                                                       'presion_10_100': presion_10_100,
+                                                       'presion_100_250': presion_100_250,
+                                                       'temp': dictionary.get('temp'),
+                                                       'temp_100': temp_100,
+                                                       'temp_100_500': temp_100_500,
+                                                       'temp_500_1000': temp_500_1000,
+                                                       'temp_1000_2000': temp_1000_2000,
+                                                       'patr_dimensional': dictionary.get('cant_dim'),
+                                                       'patr_dureza': dictionary.get('dureza'),
 
                                                        'cant_patr_metalografico': cant_patr_metalograficos,
                                                        # New
@@ -593,14 +591,14 @@ def patrones(request):
                                                        'cant_patr_quimicos': cant_patr_quimicos,
                                                        'inst_patr_quimicos_more_info': inst_patr_quimicos_more_info,
 
-                                                       'cant_flujo': dictionary.get('flujo'),
-                                                       'cant_volumen': dictionary.get('volumen'),
-                                                       'cant_masa': dictionary.get('masa'),
-                                                       'cant_fuerza': dictionary.get('fuerza'),
-                                                       'cant_fis_quim': dictionary.get('fis_quim'),
-                                                       'cant_vibr': dictionary.get('vibr'),
-                                                       'cant_ruido': dictionary.get('ruido'),
-                                                       'cant_ilum': dictionary.get('ilum'),
+                                                       'flujo': dictionary.get('flujo'),
+                                                       'volumen': dictionary.get('volumen'),
+                                                       'masa': dictionary.get('masa'),
+                                                       'fuerza': dictionary.get('fuerza'),
+                                                       'fis_quim': dictionary.get('fis_quim'),
+                                                       'vibr': dictionary.get('vibr'),
+                                                       'ruido': dictionary.get('ruido'),
+                                                       'ilum': dictionary.get('ilum'),
                                                        })
 
 

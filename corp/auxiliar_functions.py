@@ -64,10 +64,13 @@ def instrumentos_por_magnitud():
 
 def cantidad_inst_por_grupo(instr, magnitudes):
     elect = 0
+    inst_elect = []
     d_elect = dict()
     presion = 0
+    inst_presion = []
     d_presion = dict()
     temp = 0
+    inst_tmp = []
     d_tmp = dict()
     flujo = 0
     d_flujo = dict()
@@ -95,14 +98,17 @@ def cantidad_inst_por_grupo(instr, magnitudes):
             if i.idmag_id == me.idmag and i.magiddb_id == me.magiddb:
                 if str(me.grpmagnom.grpmagnom).lower() == 'electricidad':
                     elect += 1
+                    inst_elect.append(i)
                     d_elect = more_info(i, d_elect)
                 else:
                     if str(me.grpmagnom.grpmagnom).lower() == 'presión':
                         presion += 1
+                        inst_presion.append(i)
                         d_presion = more_info(i, d_presion)
                     else:
                         if str(me.grpmagnom.grpmagnom).lower() == 'temperatura':
                             temp += 1
+                            inst_tmp.append(i)
                             d_tmp = more_info(i, d_tmp)
                         else:
                             if str(me.grpmagnom.grpmagnom).lower() == 'dimensional':
@@ -175,6 +181,9 @@ def cantidad_inst_por_grupo(instr, magnitudes):
         'vibr': {vibr: json.dumps(d_vibr)},
         'ruido': {ruido: json.dumps(d_ruido)},
         'ilum': {ilum: json.dumps(d_ilum)},
+        'inst_elect': inst_elect,
+        'inst_presion': inst_presion,
+        'inst_tmp': inst_tmp
     }
 
     return dictionary
@@ -182,24 +191,30 @@ def cantidad_inst_por_grupo(instr, magnitudes):
 
 def cantidad_patrones_por_magnitud(instr_patr, magnitudes):
     int_elec = 0
+    d_elect = dict()
     ten_elec = 0
+    d_ten = dict()
     res_elec = 0
+    d_res = dict()
 
     for ip in instr_patr:
         for me in magnitudes:
             if ip.idmag_id == me.idmag and ip.magiddb_id == me.magiddb:
                 if me.magnom == 'Intensidad de corriente eléctrica':
                     int_elec += 1
+                    d_elect = more_info(ip, d_elect)
                     break
                 else:
                     if me.magnom == 'Tensión eléctrica':
                         ten_elec += 1
+                        d_ten = more_info(ip, d_ten)
                         break
                     else:
                         if me.magnom == 'Resistencia Eléctrica':
                             res_elec += 1
+                            d_res = more_info(ip, d_res)
                             break
-    return int_elec, ten_elec, res_elec
+    return {int_elec: json.dumps(d_elect)}, {ten_elec: json.dumps(d_ten)}, {res_elec: json.dumps(d_res)}
 
 
 def remove_duplicated_instruments():
