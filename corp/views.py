@@ -461,10 +461,10 @@ def patrones(request):
 
     # Determinar la cantidad de instrumentos patrones de energia monofasicos
 
-    cad = "PatrÃ³n de energÃ­a monofÃ¡sicos de alta exactitud"
-    cad1 = "PatrÃ³n de energÃ­a monofasicos de alta exactitud"
-    cad2 = "PatrÃ³n de energia monofÃ¡sicos de alta exactitud"
-    cad3 = "PatrÃ³n de energia monofasicos de alta exactitud"
+    cad = "Patrón de energía monofásicos de alta exactitud"
+    cad1 = "Patrón de energía monofasicos de alta exactitud"
+    cad2 = "Patrón de energia monofásicos de alta exactitud"
+    cad3 = "Patrón de energia monofasicos de alta exactitud"
     for ip in instr_patr:
         desc = str(ip.instdescripcion).lower()
         if desc == cad.lower() or desc == cad1.lower() or desc == cad2.lower() or desc == cad3.lower():
@@ -472,10 +472,10 @@ def patrones(request):
             inst_energia_monofasico_more_info = more_info(ip, inst_energia_monofasico_more_info)
     # Determinar la cantidad de instrumentos patrones de energia trifasicos
 
-    cad = "PatrÃ³n de energÃ­a trifÃ¡sicos de alta exactitud"
-    cad1 = "PatrÃ³n de energÃ­a trifasicos de alta exactitud"
-    cad2 = "PatrÃ³n de energia trifÃ¡sicos de alta exactitud"
-    cad3 = "PatrÃ³n de energia trifasicos de alta exactitud"
+    cad = "Patrón de energía trifásicos de alta exactitud"
+    cad1 = "Patrón de energía trifasicos de alta exactitud"
+    cad2 = "Patrón de energia trifásicos de alta exactitud"
+    cad3 = "Patrón de energia trifasicos de alta exactitud"
     for ip in instr_patr:
         desc = str(ip.instdescripcion).lower()
         if desc == cad.lower() or desc == cad1.lower() or desc == cad2.lower() or desc == cad3.lower():
@@ -483,8 +483,8 @@ def patrones(request):
             inst_energia_trifasico_more_info = more_info(ip, inst_energia_trifasico_more_info)
     # Determinar la cantidad de instrumentos patrones de energia de trabajo
 
-    cad1 = 'PatrÃ³n de energia de trabajo'
-    cad2 = 'PatrÃ³n de energÃ­a de trabajo'
+    cad1 = 'Patrón de energia de trabajo'
+    cad2 = 'Patrón de energía de trabajo'
     for ip in instr_patr:
         if str(ip.instdescripcion).lower() == cad1.lower() or str(ip.instdescripcion).lower() == cad2.lower():
             cant_patr_ener_trab += 1
@@ -505,7 +505,7 @@ def patrones(request):
 
     # Determinar cantidad de patrones de relacion de Transformacion
 
-    cad = "Medidor de RelaciÃ³n de TransformaciÃ³n"
+    cad = "Medidor de Relación de Transformación"
     cad1 = "TTR"
     for ip in instr_patr:
         if str(ip.instdescripcion).lower() == cad.lower() or str(ip.instdescripcion).lower() == cad1.lower():
@@ -537,16 +537,16 @@ def patrones(request):
 
     # Determinar cantidad de patrones de ensayos metalograficos
 
-    cad = "PatrÃ³n de ensayos metalogrÃ¡ficos"
-    cad1 = "PatrÃ³n de ensayos metalograficos"
+    cad = "Patrón de ensayos metalográficos"
+    cad1 = "Patrón de ensayos metalograficos"
     for ip in instr_patr:
         if str(ip.instdescripcion).lower() == cad.lower() or str(ip.instdescripcion).lower() == cad1.lower():
             cant_patr_metalograficos += 1
             inst_patr_metalograficos_more_info = more_info(ip, inst_patr_metalograficos_more_info)
     # Determinar cantidad de patrones de ensayos quimicos
 
-    cad = "PatrÃ³n de ensayos quÃ­micos"
-    cad1 = "PatrÃ³n de ensayos quimicos"
+    cad = "Patrón de ensayos químicos"
+    cad1 = "Patrón de ensayos quimicos"
     for ip in instr_patr:
         if str(ip.instdescripcion).lower() == cad.lower() or str(ip.instdescripcion).lower() == cad1.lower():
             cant_patr_quimicos += 1
