@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Electricidad
                             <br>{{ cant_electr }}
-
+                            <i class="fa fa-plus" onclick="modal_function('{{ inst_per_comp|escapejs }}')"></i>
                         </h5>
                     </div>
                 </div>
@@ -267,9 +267,11 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title  text-center">Miliohm</h5>
-                        {% for k, v in miliohm %}
+                        {% for k, k1, dictionary in miliohm %}
                             <div class="dropdown-divider"></div>
-                            <p class="card-text text-center">{{ k }}: {{ v }}</p>
+                            <p class="card-text text-center">{{ k }}: {{ k1 }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ dictionary|escapejs }}')"></i>
+                            </p>
                         {% endfor %}
                     </div>
                 </div>
@@ -278,9 +280,11 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Ohm</h5>
-                        {% for k, v in ohm %}
+                        {% for k, k1, dictionary in ohm %}
                             <div class="dropdown-divider"></div>
-                            <p class="card-text text-center">{{ k }}: {{ v }}</p>
+                            <p class="card-text text-center">{{ k }}: {{ k1 }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ dictionary|escapejs }}')"></i>
+                            </p>
                         {% endfor %}
                     </div>
                 </div>
@@ -289,9 +293,11 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Kiloohm</h5>
-                        {% for k, v in kiloohm %}
+                        {% for k, k1, dictionary in kiloohm %}
                             <div class="dropdown-divider"></div>
-                            <p class="card-text text-center">{{ k }}: {{ v }}</p>
+                            <p class="card-text text-center">{{ k }}: {{ k1 }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ dictionary|escapejs }}')"></i>
+                            </p>
                         {% endfor %}
                     </div>
                 </div>
@@ -300,9 +306,11 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center">Megaohm</h5>
-                        {% for k, v in megaohm %}
+                        {% for k, k1, dictionary in megaohm %}
                             <div class="dropdown-divider"></div>
-                            <p class="card-text text-center">{{ k }}: {{ v }}</p>
+                            <p class="card-text text-center">{{ k }}: {{ k1 }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ dictionary|escapejs }}')"></i>
+                            </p>
                         {% endfor %}
                     </div>
                 </div>

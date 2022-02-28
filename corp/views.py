@@ -1,17 +1,16 @@
+import json
 import os
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 
 from corp.auxiliar_functions import *
 from corp.models import *
-
-import json
 
 
 def principal(request):
@@ -142,68 +141,53 @@ def instrumentos_trabajo_gen(request):
     magns = Magnitudes.objects.all()
 
     cant_trab = 0
-    # New
     inst_trab_more_info = dict()
 
     count_vacuometro = 0
-    # New
     inst_vacuometro_more_info = dict()
 
     count_pie_rey = 0
-    # New
     inst_pie_rey_more_info = dict()
 
     count_pie_rey_profundidad = 0
-    # New
     inst_pie_rey_profundidad_more_info = dict()
 
     count_micrometro = 0
-    # New
     inst_micrometro_more_info = dict()
 
     cant_cintas = 0
-    # New
     inst_cintas_more_info = dict()
 
     cant_medidor_nivel = 0
-    # New
     inst_medidor_nivel_more_info = dict()
 
     cant_medidor_angulo = 0
-    # New
     inst_medidor_angulo_more_info = dict()
 
     cant_comparador_caratula = 0
-    # New
     inst_comparador_caraturla_more_info = dict()
 
     cant_regla = 0
-    # New
     inst_regla_more_info = dict()
 
     cant_galga = 0
-    # New
     inst_galga_more_info = dict()
 
     cant_ttr = 0
-    # New
     inst_ttr_more_info = dict()
 
     cant_armonico = 0
-    # New
     inst_armonico_more_info = dict()
 
     cant_multif = 0
-    # New
     inst_multif_more_info = dict()
 
     count_mag_frec = 0
-    # New
     inst_mag_frec_more_info = dict()
 
     cant_presion = 0
-    # New
     inst_presion_more_info = dict()
+
     inst_tension_subset = []
     instr_micrometro = []
     instrumentos_grupo_presion = []
@@ -326,52 +310,52 @@ def instrumentos_trabajo_gen(request):
 
     return render(request, 'corp/rng/rango.html',
                   {'cant_trab': cant_trab,
-                   # New
+
                    'inst_trab_more_info': json.dumps(inst_trab_more_info),
                    'count_vacuometro': count_vacuometro,
-                   # New
+
                    'inst_vacuometro_more_info': json.dumps(inst_vacuometro_more_info),
                    'count_pie_rey': count_pie_rey,
-                   # New
+
                    'inst_pie_rey_more_info': json.dumps(inst_pie_rey_more_info),
                    'count_pie_rey_profundidad': count_pie_rey_profundidad,
-                   # New
+
                    'inst_pie_rey_profundidad_more_info': json.dumps(inst_pie_rey_profundidad_more_info),
                    'count_micrometro': count_micrometro,
-                   # New
+
                    'inst_micrometro_more_info': json.dumps(inst_micrometro_more_info),
                    'count_cintas': cant_cintas,
-                   # New
+
                    'inst_cintas_more_info': json.dumps(inst_cintas_more_info),
                    'count_medidor_nivel': cant_medidor_nivel,
-                   # New
+
                    'inst_medidor_nivel_more_info': json.dumps(inst_medidor_nivel_more_info),
                    'count_medidor_angulo': cant_medidor_angulo,
-                   # New
+
                    'inst_medidor_angulo_more_info': json.dumps(inst_medidor_angulo_more_info),
                    'count_comparador_caratula': cant_comparador_caratula,
-                   # New
+
                    'inst_comparador_caraturla_more_info': json.dumps(inst_comparador_caraturla_more_info),
                    'count_regla': cant_regla,
-                   # New
+
                    'inst_regla_more_info': json.dumps(inst_regla_more_info),
                    'count_galga': cant_galga,
-                   # New
+
                    'inst_galga_more_info': json.dumps(inst_galga_more_info),
                    'count_ttr': cant_ttr,
-                   # New
+
                    'inst_ttr_more_info': json.dumps(inst_ttr_more_info),
                    'count_arm': cant_armonico,
-                   # New
+
                    'inst_armonico_more_info': json.dumps(inst_armonico_more_info),
                    'count_multif': cant_multif,
-                   # New
+
                    'inst_multif_more_info': json.dumps(inst_multif_more_info),
                    'count_mag_frec': count_mag_frec,
-                   # New
+
                    'inst_mag_frec_more_info': json.dumps(inst_mag_frec_more_info),
                    'cant_presion': cant_presion,
-                   # New
+
                    'inst_presion_more_info': json.dumps(inst_presion_more_info),
                    'count_1_kV': count_1_kV,
                    'count_1_5_V': count_1_5_kV,
@@ -641,31 +625,6 @@ def patrones(request):
                                                        'cant_ruido': dictionary.get('cant_ruido'),
                                                        'cant_ilum': dictionary.get('cant_ilum'),
                                                        })
-
-# Data Grafico para cantidad de instrumentos por magnitud
-
-
-def instrumento_magnitud_data(request):
-    instr_por_mag = []
-    for i in Magnitudes.objects.all():
-        instr_por_mag.append((i.magnom, Instrumentos.objects.filter(idmag=i).count()))
-
-    chart = {
-        'chart': {'type': 'pie'},
-        'title': {'text': 'Cantidad de Instrumentos por Magnitudes'},
-        'backgroundColor': '#162447',
-        'plotOptions': {
-            'bar': {
-                'stacking': 'normal'
-            }},
-        'credits': {'enabled': 'false'},
-        'series': [{
-            'name': 'Cantidad',
-            'data': [{'name': x[0], 'y': x[1]} for x in instr_por_mag]
-        }]
-    }
-
-    return JsonResponse(chart)
 
 
 def informe_magnitudes(request):

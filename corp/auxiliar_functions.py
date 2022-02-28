@@ -1,8 +1,8 @@
+import json
 from datetime import date
 
 import pandas as pd
 import xlsxwriter
-import json
 
 from corp.models import *
 
@@ -273,15 +273,6 @@ def instrumentos_medidores_resistencia(instr_single):
     kiloohm_lista = []
     megaohm_lista = []
 
-    count_miliohm = 0
-    count_ohm = 0
-    count_kiloohm = 0
-    count_megaohm = 0
-
-    miliohm_dict = dict()
-    ohm_dict = dict()
-    kiloohm_dict = dict()
-    megaohm_dict = dict()
     for um in unimed:
         if um.unimednom == 'Miliohm' or um.unimednom == 'miliohm':
             for rmu in relmagunimed:
@@ -294,14 +285,13 @@ def instrumentos_medidores_resistencia(instr_single):
                                 if cm.idrngmed_id == rng.idrngmed and cm.rngmediddb_id == rng.rngmediddb:
                                     for ins in instr_single:
                                         if ins.idinst == cm.idinst_id:
-                                            count_miliohm += 1
-                                            miliohm_dict = more_info(ins, miliohm_dict)
-                            if count_miliohm != 0:
-                                if cadena in miliohm:
-                                    miliohm[cadena] += count_miliohm
-                                else:
-                                    miliohm[cadena] = count_miliohm
-                            count_miliohm = 0
+                                            if cadena in miliohm:
+                                                for k in miliohm[cadena]:
+                                                    miliohm_dict = more_info(ins, miliohm[cadena][k])
+                                                    miliohm[cadena] = {k + 1: miliohm_dict}
+                                            else:
+                                                miliohm_dict = more_info(ins, dict())
+                                                miliohm[cadena] = {1: miliohm_dict}
         else:
             if um.unimednom == 'Ohm' or um.unimednom == 'ohm':
                 for rmu in relmagunimed:
@@ -314,13 +304,13 @@ def instrumentos_medidores_resistencia(instr_single):
                                     if cm.idrngmed_id == rng.idrngmed and cm.rngmediddb_id == rng.rngmediddb:
                                         for ins in instr_single:
                                             if ins.idinst == cm.idinst_id:
-                                                count_ohm += 1
-                                if count_ohm != 0:
-                                    if cadena in miliohm:
-                                        ohm[cadena] += count_ohm
-                                    else:
-                                        ohm[cadena] = count_ohm
-                                count_ohm = 0
+                                                if cadena in ohm:
+                                                    for k in ohm[cadena]:
+                                                        ohm_dict = more_info(ins, ohm[cadena][k])
+                                                        ohm[cadena] = {k + 1: ohm_dict}
+                                                else:
+                                                    ohm_dict = more_info(ins, dict())
+                                                    ohm[cadena] = {1: ohm_dict}
             else:
                 if um.unimednom == 'Kiloohm' or um.unimednom == 'kiloohm':
                     for rmu in relmagunimed:
@@ -334,13 +324,13 @@ def instrumentos_medidores_resistencia(instr_single):
                                         if cm.idrngmed_id == rng.idrngmed and cm.rngmediddb_id == rng.rngmediddb:
                                             for ins in instr_single:
                                                 if ins.idinst == cm.idinst_id:
-                                                    count_kiloohm += 1
-                                    if count_kiloohm != 0:
-                                        if cadena in kiloohm:
-                                            kiloohm[cadena] += count_kiloohm
-                                        else:
-                                            kiloohm[cadena] = count_kiloohm
-                                    count_kiloohm = 0
+                                                    if cadena in kiloohm:
+                                                        for k in kiloohm[cadena]:
+                                                            kiloohm_dict = more_info(ins, kiloohm[cadena][k])
+                                                            kiloohm[cadena] = {k + 1: kiloohm_dict}
+                                                    else:
+                                                        kiloohm_dict = more_info(ins, dict())
+                                                        kiloohm[cadena] = {1: kiloohm_dict}
                 else:
                     if um.unimednom == 'Megaohm' or um.unimednom == 'megaohm':
                         for rmu in relmagunimed:
@@ -354,25 +344,26 @@ def instrumentos_medidores_resistencia(instr_single):
                                             if cm.idrngmed_id == rng.idrngmed and cm.rngmediddb_id == rng.rngmediddb:
                                                 for ins in instr_single:
                                                     if ins.idinst == cm.idinst_id:
-                                                        count_megaohm += 1
-                                        if count_megaohm != 0:
-                                            if cadena in miliohm:
-                                                megaohm[cadena] += count_megaohm
-                                            else:
-                                                megaohm[cadena] = count_megaohm
-                                        count_megaohm = 0
-    keys_miliohm = miliohm.keys()
-    keys_ohm = ohm.keys()
-    keys_kilohm = kiloohm.keys()
-    keys_megaohm = megaohm.keys()
-    for k in keys_miliohm:
-        miliohm_lista.append((k, miliohm[k]))
-    for k in keys_ohm:
-        ohm_lista.append((k, ohm[k]))
-    for k in keys_kilohm:
-        kiloohm_lista.append((k, kiloohm[k]))
-    for k in keys_megaohm:
-        megaohm_lista.append((k, megaohm[k]))
+                                                        if cadena in megaohm:
+                                                            for k in megaohm[cadena]:
+                                                                megaohm_dict = more_info(ins, megaohm[cadena][k])
+                                                                megaohm[cadena] = {k + 1: megaohm_dict}
+                                                        else:
+                                                            megaohm_dict = more_info(ins, dict())
+                                                            megaohm[cadena] = {1: megaohm_dict}
+
+    for k in miliohm:
+        for k1 in miliohm[k]:
+            miliohm_lista.append((k, k1, json.dumps(miliohm[k][k1])))
+    for k in ohm:
+        for k1 in ohm[k]:
+            ohm_lista.append((k, k1, json.dumps(ohm[k][k1])))
+    for k in kiloohm:
+        for k1 in kiloohm[k]:
+            kiloohm_lista.append((k, k1, json.dumps(kiloohm[k][k1])))
+    for k in megaohm:
+        for k1 in megaohm[k]:
+            megaohm_lista.append((k, k1, json.dumps(megaohm[k][k1])))
 
     return miliohm_lista, ohm_lista, kiloohm_lista, megaohm_lista
 
