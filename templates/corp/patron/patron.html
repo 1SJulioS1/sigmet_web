@@ -1,4 +1,5 @@
 {% extends 'corp/base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container ">
@@ -6,7 +7,10 @@
             <div class="container border custom-background header-bordered ">
                 <h2>Resumen de instrumentos patrones</h2>
                 <br>
-                <h4>Total de instrumentos patrones: {{ cant_patr }}</h4>
+                <h4>Total de instrumentos patrones: {{ cant_patr }}
+                    <i class="fa fa-plus" onclick="modal_function('{{ inst_patr_more_info|escapejs }}')"></i>
+
+                </h4>
             </div>
         </div>
         <br>
@@ -136,6 +140,8 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-center"> Patrones de ensayos quimicos
+                            <i class="fa fa-plus"
+                               onclick="modal_function('{{ inst_patr_quimicos_more_info|escapejs }}')"></i>
                             <br>{{ cant_patr_quimicos }}</h5></div>
                 </div>
             </div>
@@ -148,15 +154,25 @@
                             <h5 class="card-title  text-center"> Electricidad</h5>
                             <div class="dropdown-divider"></div>
                             <p class="card-text text-center">Energía monofásicos de alta
-                                exactitud {{ cant_energia_monofasico }}</p>
+                                exactitud {{ cant_energia_monofasico }}
+                                <i class="fa fa-plus"
+                                   onclick="modal_function('{{ inst_energia_monofasico_more_info|escapejs }}')"></i>
+
+                            </p>
 
                             <div class="dropdown-divider"></div>
                             <p class="card-text text-center">Energía trifásicos de alta
-                                exactitud {{ cant_energia_trifasico }}</p>
+                                exactitud {{ cant_energia_trifasico }}
+                                <i class="fa fa-plus"
+                                   onclick="modal_function('{{ inst_energia_trifasico_more_info|escapejs }}')"></i>
+                            </p>
 
                             <div class="dropdown-divider"></div>
                             <p class="card-text text-center">Energía de trabajo
                                 <br>{{ cant_patr_ener_trab }}
+                                <i class="fa fa-plus"
+                                   onclick="modal_function('{{ inst_patr_ener_trab_more_info|escapejs }}')"></i>
+
                             </p>
                         </div>
                     </div>
@@ -171,7 +187,9 @@
                             <p class="card-text text-center">Resistencia: {{ cant_electr_resistencia }}</p>
 
                             <div class="dropdown-divider"></div>
-                            <p class="card-text text-center">Relación de Transformación: {{ cant_rel_trans }}</p>
+                            <p class="card-text text-center">Relación de Transformación: {{ cant_rel_trans }}
+                                <i class="fa fa-plus" onclick="modal_function('{{ inst_rel_trans|escapejs }}')"></i>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -219,4 +237,8 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'scripts/gen.js' %}"></script>
 {% endblock %}
