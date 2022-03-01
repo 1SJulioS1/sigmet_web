@@ -1,35 +1,18 @@
-$('#tabla_modal').dataTable({
-    // // "order": true,
-    // // "info": true,
-    // "search": {
-    //     "smart": false
-    // },
-    // // "paging": true,
-    // // "displayStart":20,
-    // // "orderClasses": false
-    // "pagingType": "full_numbers"
-});
+
 
 var modal = document.getElementById("modal_gen");
-
-// Get the button that opens the modal
-var btn_uso = document.getElementById("btn_uso");
-
-var btn_alm = document.getElementById("btn_alm");
-
-var btn_roto = document.getElementById("btn_roto");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 var tabla = document.getElementById('tabla_modal');
 
-function limpiar_body() {
-    tabla.removeChild(tabla.lastElementChild);
+function limpiar_body(t) {
+    t.removeChild(t.lastElementChild);
 }
 
-function rellenar_tabla(d) {
-    limpiar_body();
+function rellenar_tabla(t, d) {
+    limpiar_body(t);
     let body = document.createElement('tbody');
     for (let key in d) {
         let tr = document.createElement('tr');
@@ -43,13 +26,33 @@ function rellenar_tabla(d) {
         tr.appendChild(td2);
         body.appendChild(tr);
     }
-    tabla.appendChild(body);
+    t.appendChild(body);
 }
 
 // When the user clicks the button, open the modal
 function modal_function(inst) {
+    let div = document.getElementById("div_tabla");
+    div.removeChild(div.lastElementChild);
+    let t = document.createElement("table");
+    t.setAttribute("id", "tabla_modal");
+    let thead = document.createElement("thead");
+    let tr = document.createElement("tr");
+    let th1 = document.createElement("th");
+    let th2 = document.createElement("th");
+    let text1 = document.createTextNode("Empresas");
+    let text2 = document.createTextNode("Instrumentos");
+    let body = document.createElement("tbody");
+    th1.appendChild(text1);
+    th2.appendChild(text2);
+    tr.appendChild(th1);
+    tr.appendChild(th2);
+    thead.appendChild(tr);
+    t.appendChild(thead);
+    t.appendChild(body);
+    div.appendChild(t)
     let d = JSON.parse(inst);
-    rellenar_tabla(d);
+    rellenar_tabla(t, d);
+    $('#tabla_modal').DataTable({});
     modal.style.display = "block";
 }
 
