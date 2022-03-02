@@ -49,7 +49,7 @@ function modal_function(inst) {
     thead.appendChild(tr);
     t.appendChild(thead);
     t.appendChild(body);
-    div.appendChild(t)
+    div.appendChild(t);
     let d = JSON.parse(inst);
     rellenar_tabla(t, d);
     $('#tabla_modal').DataTable({});
