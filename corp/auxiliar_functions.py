@@ -40,14 +40,16 @@ def obtener_instrumentos_rango(minimo, maximo, unidad_de_medicion, instrument_su
 
 def instrumentos_por_magnitud():
     grupo = Gruposmagnitudes.objects.all()
-    magns = Magnitudes.objects.all()
+    magns = remove_duplicated_magnitudes()
     instr_single = remove_duplicated_instruments()
+
+
 
     inst_per_mag_per_group = dict()
     for g in grupo:
         inst_per_magns = dict()
         for m in magns:
-            if m.grpmagnom.grpmagnom == g.grpmagnom:
+            if m.grpmagnom == g:
                 count = 0
                 inst_per_comp = dict()
                 for i in instr_single:
@@ -221,11 +223,11 @@ def remove_duplicated_instruments():
     instrumentos = Instrumentos.objects.all()
     instr_single = []
     flag = 0
+    count = 0
     for i in instrumentos:
+        count += 1
         for ip in instr_single:
-            if ip.instnom == i.instnom and ip.instmarca == i.instmarca and ip.instmodelo == i.instmodelo and \
-                    ip.instnoserie == i.instnoserie and ip.instnoinv == i.instnoinv and ip.instanhofab == i.instanhofab and \
-                    ip.catusonom.catusonom == i.catusonom.catusonom and ip.catinstnom.catinstnom == i.catinstnom.catinstnom:
+            if ip == i:
                 flag = 1
                 break
         if flag == 0:
@@ -239,14 +241,25 @@ def remove_duplicated_campanies():
     emp_single = []
     flag = 0
     for e in emp:
-        for es in emp_single:
-            if es.empnom == e.empnom and es.empnomcom == e.empnomcom:
+        for e1 in emp_single:
+            if e1.empnom == e.empnom:
                 flag = 1
                 break
         if flag == 0:
             emp_single.append(e)
         flag = 0
     return emp_single
+
+
+def remove_duplicated_magnitudes():
+    mag = Magnitudes.objects.all()
+    single_mag = []
+    for m in mag:
+        if m in single_mag:
+            pass
+        else:
+            single_mag.append(m)
+    return single_mag
 
 
 def obtener_instrumento_fabricante(instr):
@@ -413,7 +426,7 @@ def instrumentos_procesos_corporativos(instr_single):
     instruments_per_companies_per_provinces = []
     for p in prov:
         for es in emp_single:
-            if es.idmun.idprov.idprov == p.idprov:
+            if es.idmun.idprov == p.idprov:
                 for rel in relatribproc:
                     for inst in instr_single:
                         if inst.idemp_id == es.idemp and inst.idrelatribproccorp_id == rel.idrelatribproccorp and \
@@ -450,7 +463,7 @@ def instrumentos_anhos_explotacion(instr_single):
 
     for p in prov:
         for es in emp_single:
-            if es.idmun.idprov.idprov == p.idprov:
+            if es.idmun.idprov == p.idprov:
                 for ins in instr_single:
                     if ins.catusonom.catusonom == 'Trabajo':
                         if ins.idemp_id == es.idemp:
@@ -497,8 +510,6 @@ def instrumentos_anhos_explotacion(instr_single):
 def magnitudes_por_provincias():
     df = pd.read_excel('static/docs/Arruza- Tabla Levantamiento magnitudes.xlsx', sheet_name=None)
     sheets = list(df.keys())
-    del sheets[0]
-    del sheets[len(sheets) - 2:len(sheets)]
     columns = []
     for i in range(0, len(sheets)):
         columns.append('B')
@@ -512,11 +523,12 @@ def magnitudes_por_provincias():
         magnitud_denominacion[i] = r
 
     instr_single = remove_duplicated_instruments()  # elimino los instrumentos repetidos
-    emp_single = remove_duplicated_campanies()  # elimino las empresas repetidas
+    emp = Empresas.objects.all()
+
     prov = Provincias.objects.all()
     caract_met = Caracteristicasmetrologicas.objects.all()
     rangos = Rangosmedicion.objects.all()
-    magn = Magnitudes.objects.all()
+    magn = remove_duplicated_magnitudes()
     rel = Relacionmagnitudesunidadesmedicion.objects.all()
 
     inst_per_prov_per_magn = []
@@ -545,7 +557,7 @@ def magnitudes_por_provincias():
                         lista = [10, 1000000]
                         unidad_medicion = 'mm'
                     else:
-                        if nombre == 'escuadra cilíndirca':
+                        if nombre == 'escuadra cilíndrica':
                             lista = [200]
                             unidad_medicion = 'mm'
                         else:
@@ -566,11 +578,11 @@ def magnitudes_por_provincias():
                                             unidad_medicion = 'mm'
                                         else:
                                             if nombre == 'pesa clase f2':
-                                                lista = [500]
-                                                unidad_medicion = 'g'
+                                                lista = [1, 20]
+                                                unidad_medicion = 'kg'
                                             else:
                                                 if nombre == 'pesa clase m1-m3':
-                                                    lista = [5, 10, 20, 50]
+                                                    lista = [1, 5, 10, 20, 50]
                                                     unidad_medicion = 'kg'
                                                 else:
                                                     if nombre == 'pesa':
@@ -664,80 +676,61 @@ def magnitudes_por_provincias():
                                                                                                                                     1000000]
                                                                                                                                 unidad_medicion = 'm'
                                                                                                                             else:
-                                                                                                                                if nombre == 'cinta métrica con plomada':
+                                                                                                                                if nombre == 'cinta de medición con plomada':
                                                                                                                                     lista = [
                                                                                                                                         30]
                                                                                                                                     unidad_medicion = 'm'
                                                                                                                                 else:
-                                                                                                                                    if nombre == 'bloque patrón':
+                                                                                                                                    if nombre.__contains__(
+                                                                                                                                            'bloque patrón grado'):
                                                                                                                                         lista = [
                                                                                                                                             100,
                                                                                                                                             500,
                                                                                                                                             1000]
-                                                                                                                                        exactitud = [
-                                                                                                                                            0,
-                                                                                                                                            1,
-                                                                                                                                            2]
                                                                                                                                         unidad_medicion = 'mm'
                                                                                                                                     else:
-                                                                                                                                        if nombre == 'cristal plano inferior' or \
-                                                                                                                                                nombre == 'medida angular prismática' or \
-                                                                                                                                                nombre == 'dinamómetro ordinario':
-                                                                                                                                            exactitud = [
-                                                                                                                                                1,
-                                                                                                                                                2]
+                                                                                                                                        if nombre == 'camión cisterna':
+                                                                                                                                            lista = [
+                                                                                                                                                5]
+                                                                                                                                            unidad_medicion = 'm3'
                                                                                                                                         else:
-                                                                                                                                            if nombre == 'dinamómetro portátil patrón' or \
-                                                                                                                                                    nombre == 'dinamómetro universal patrón' or \
-                                                                                                                                                    nombre.__contains__(
-                                                                                                                                                        'ómetro de deformación elástica') or \
-                                                                                                                                                    nombre == 'manómetro' or nombre == 'vacuómetro':
-                                                                                                                                                exactitud = [
-                                                                                                                                                    0.5]
+                                                                                                                                            if nombre == 'medida con trazos rígida':
+                                                                                                                                                lista = [
+                                                                                                                                                    1,
+                                                                                                                                                    1000000]
+                                                                                                                                                unidad_medicion = 'm'
                                                                                                                                             else:
-                                                                                                                                                if nombre == 'manómetro de líquido' or \
-                                                                                                                                                        nombre == 'manómetro de tubo en U' or \
-                                                                                                                                                        nombre == 'manómetro de tubo y recipiente' or \
-                                                                                                                                                        nombre == 'vacuómetro de líquido' or \
-                                                                                                                                                        nombre == 'vacuómetro de tubo en U' or \
-                                                                                                                                                        nombre == 'vacuómetro de tubo y recipiente':
-                                                                                                                                                    exactitud = [
-                                                                                                                                                        0.5,
+                                                                                                                                                if nombre == 'regla':
+                                                                                                                                                    lista = [
+                                                                                                                                                        1000,
                                                                                                                                                         1000000]
+                                                                                                                                                    exactitud = [
+                                                                                                                                                        1,
+                                                                                                                                                        1000000]
+                                                                                                                                                    unidad_medicion = 'mm'
                                                                                                                                                 else:
-                                                                                                                                                    if nombre == 'camión cisterna':
+                                                                                                                                                    if nombre == 'termómetro líquido en vidrio':
                                                                                                                                                         lista = [
-                                                                                                                                                            5]
-                                                                                                                                                        unidad_medicion = 'm3'
+                                                                                                                                                            100,
+                                                                                                                                                            300]
+                                                                                                                                                        exactitud = [
+                                                                                                                                                            0.1,
+                                                                                                                                                            0.2,
+                                                                                                                                                            0.5,
+                                                                                                                                                            1]
+                                                                                                                                                        unidad_medicion = '°C'
                                                                                                                                                     else:
-                                                                                                                                                        if nombre.__contains__(
-                                                                                                                                                                'medidor de corriente eléctrica') or \
-                                                                                                                                                                nombre.__contains__(
-                                                                                                                                                                    'medidor de tensión eléctrica') or \
-                                                                                                                                                                nombre.__contains__(
-                                                                                                                                                                    'medidor de potencia eléctrica'):
-                                                                                                                                                            if nombre.__contains__(
-                                                                                                                                                                    'digital') or nombre.__contains__(
-                                                                                                                                                                    'analógic'):
-                                                                                                                                                                exactitud = [
-                                                                                                                                                                    1.0]
-                                                                                                                                                            else:
-                                                                                                                                                                exactitud = [
-                                                                                                                                                                    0.5]
+                                                                                                                                                        if nombre == 'contador de agua doméstico':
+                                                                                                                                                            lista = [
+                                                                                                                                                                5]
+                                                                                                                                                            unidad_medicion = 'm3/h'
                                                                                                                                                         else:
-                                                                                                                                                            if nombre == 'medida con trazos rígida':
+                                                                                                                                                            if nombre == 'contador de líquido de uso comercial':
                                                                                                                                                                 lista = [
-                                                                                                                                                                    1]
-                                                                                                                                                                unidad_medicion = 'm'
-                                                                                                                                                            else:
-                                                                                                                                                                if nombre == 'regla':
-                                                                                                                                                                    lista = [
-                                                                                                                                                                        1000,
-                                                                                                                                                                        1000000]
-                                                                                                                                                                    exactitud = [
-                                                                                                                                                                        1,
-                                                                                                                                                                        1000000]
-                                                                                                                                                                    unidad_medicion = 'mm'
+                                                                                                                                                                    10,
+                                                                                                                                                                    60,
+                                                                                                                                                                    1000000]
+                                                                                                                                                                unidad_medicion = 'm3/h'
 
             if unidad_medicion != '':
                 unimed = Unidadesmedicion.objects.filter(unimedsim=unidad_medicion)
@@ -752,75 +745,146 @@ def magnitudes_por_provincias():
                     dict_ctd_inst = dict()
                     for p in prov:
                         count_prov = 0
-                        for es in emp_single:
-                            if es.idmun.idprov.idprov == p.idprov:
+                        for es in emp:
+                            if es.idmun.idprov == p.idprov:
                                 for i in instr_single:
-                                    if i.idemp_id == es.idemp and i.empiddb_id == es.empiddb and nombre == i.instnom.lower():
-                                        for m in magn:
-                                            if m.idmag == i.idmag_id and m.magiddb == i.magiddb_id and \
-                                                    m.grpmagnom.grpmagnom == k:
-                                                if valor == -1:
-                                                    if exact != -1:
-                                                        flag = 0
-                                                        for cm in caract_met:
-                                                            if exact != 1000000:
-                                                                if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb and cm.caractmeterrmax <= float(
-                                                                        exact):
-                                                                    flag = 1
-                                                                    break
-                                                            else:
-                                                                if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb and cm.caractmeterrmax >= float(
-                                                                        exactitud[count_exact - 1]):
-                                                                    flag = 1
-                                                                    break
-                                                        if flag == 1:
-                                                            count_prov += check_catuso_indvisual(i, nombre)
-                                                    else:
+                                    if i.instnom == 'Equipo de rayos x':
+                                        print(str(i.idemp_id) + ' ' + str(es.idemp) + ' ' + ' ' + str(i.empiddb_id) + ' ' + str(es.empiddb) + ' ' + str(nombre))
+                                    if i.idemp_id == es.idemp and i.empiddb_id == es.empiddb and nombre == i.instnom.lower(): #and i.estadoinstnom == 'Uso':
+
+                                        print(str(k))
+                                        if str(k) in ['Inst. Diagnóstico', 'Estaciones Meteorológicas', 'Velocidad']:
+                                            print(nombre)
+                                            if valor == -1:
+                                                if exact != -1:
+                                                    flag = 0
+                                                    for cm in caract_met:
+                                                        if exact != 1000000:
+                                                            if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb and cm.caractmeterrmax <= float(
+                                                                    exact):
+                                                                flag = 1
+                                                                break
+                                                        else:
+                                                            if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb and cm.caractmeterrmax >= float(
+                                                                    exactitud[count_exact - 1]):
+                                                                flag = 1
+                                                                break
+                                                    if flag == 1:
                                                         count_prov += check_catuso_indvisual(i, nombre)
                                                 else:
-                                                    for cm in caract_met:
-                                                        if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb:
-                                                            for rng in rangos:
-                                                                if cm.idrngmed_id == rng.idrngmed and \
-                                                                        cm.rngmediddb_id == rng.rngmediddb:
-                                                                    for r in rel:
-                                                                        if rng.idrelmagunimed_id == r.idrelmagunimed and \
-                                                                                rng.relmagunimediddb_id == r.relmagunimediddb:
-                                                                            for um in unimed:
-                                                                                if r.idunimed_id == um.idunimed and \
-                                                                                        r.unimediddb_id == um.unimediddb:
-                                                                                    if count == 0:
-                                                                                        if float(
-                                                                                                rng.rngmedlimsup) <= float(
-                                                                                                valor):
-                                                                                            if exact != -1:
-                                                                                                if cm.caractmeterrmax == float(
-                                                                                                        exact):
-                                                                                                    count_prov += check_catuso_indvisual(
-                                                                                                        i, nombre)
-                                                                                            else:
-                                                                                                count_prov += check_catuso_indvisual(
-                                                                                                    i, nombre)
-                                                                                    else:
-                                                                                        if valor == 1000000:
-                                                                                            if float(
-                                                                                                    rng.rngmedlimsup) > float(
-                                                                                                    lista[count - 1]):
+                                                    count_prov += check_catuso_indvisual(i, nombre)
+                                            else:
+                                                for cm in caract_met:
+                                                    if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb:
+                                                        for rng in rangos:
+                                                            if cm.idrngmed_id == rng.idrngmed and \
+                                                                    cm.rngmediddb_id == rng.rngmediddb:
+                                                                for r in rel:
+                                                                    if rng.idrelmagunimed_id == r.idrelmagunimed and \
+                                                                            rng.relmagunimediddb_id == r.relmagunimediddb:
+                                                                        for um in unimed:
+                                                                            if r.idunimed_id == um.idunimed and \
+                                                                                    r.unimediddb_id == um.unimediddb:
+                                                                                if count == 0:
+                                                                                    if float(
+                                                                                            rng.rngmedlimsup) <= float(
+                                                                                        valor):
+                                                                                        if exact != -1:
+                                                                                            if cm.caractmeterrmax == float(
+                                                                                                    exact):
                                                                                                 count_prov += check_catuso_indvisual(
                                                                                                     i, nombre)
                                                                                         else:
+                                                                                            count_prov += check_catuso_indvisual(
+                                                                                                i, nombre)
+                                                                                else:
+                                                                                    if valor == 1000000:
+                                                                                        if float(
+                                                                                                rng.rngmedlimsup) > float(
+                                                                                            lista[count - 1]):
+                                                                                            count_prov += check_catuso_indvisual(
+                                                                                                i, nombre)
+                                                                                    else:
+                                                                                        if float(
+                                                                                                rng.rngmedliminf) > float(
+                                                                                            lista[
+                                                                                                count - 1]) and \
+                                                                                                float(
+                                                                                                    rng.rngmedlimsup) <= float(
+                                                                                            valor):
+                                                                                            count_prov += check_catuso_indvisual(
+                                                                                                i, nombre)
+                                                                                break
+                                                                break
+                                            break
+                                        else:
+                                            for m in magn:
+                                                if m.idmag == i.idmag_id and m.magiddb == i.magiddb_id and \
+                                                        m.grpmagnom.grpmagnom == k:
+                                                    if valor == -1:
+                                                        if exact != -1:
+                                                            flag = 0
+                                                            for cm in caract_met:
+                                                                if exact != 1000000:
+                                                                    if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb and cm.caractmeterrmax <= float(
+                                                                            exact):
+                                                                        flag = 1
+                                                                        break
+                                                                else:
+                                                                    if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb and cm.caractmeterrmax >= float(
+                                                                            exactitud[count_exact - 1]):
+                                                                        flag = 1
+                                                                        break
+                                                            if flag == 1:
+                                                                count_prov += check_catuso_indvisual(i, nombre)
+                                                        else:
+                                                            count_prov += check_catuso_indvisual(i, nombre)
+                                                    else:
+                                                        for cm in caract_met:
+                                                            if cm.idinst_id == i.idinst and cm.instiddb_id == i.instiddb:
+                                                                for rng in rangos:
+                                                                    if cm.idrngmed_id == rng.idrngmed and \
+                                                                            cm.rngmediddb_id == rng.rngmediddb:
+                                                                        for r in rel:
+                                                                            if rng.idrelmagunimed_id == r.idrelmagunimed and \
+                                                                                    rng.relmagunimediddb_id == r.relmagunimediddb:
+                                                                                for um in unimed:
+                                                                                    if r.idunimed_id == um.idunimed and \
+                                                                                            r.unimediddb_id == um.unimediddb:
+                                                                                        if count == 0:
                                                                                             if float(
-                                                                                                    rng.rngmedliminf) > float(
+                                                                                                    rng.rngmedlimsup) <= float(
+                                                                                                valor):
+                                                                                                if exact != -1:
+                                                                                                    if cm.caractmeterrmax == float(
+                                                                                                            exact):
+                                                                                                        count_prov += check_catuso_indvisual(
+                                                                                                            i, nombre)
+                                                                                                else:
+                                                                                                    count_prov += check_catuso_indvisual(
+                                                                                                        i, nombre)
+                                                                                        else:
+                                                                                            if valor == 1000000:
+                                                                                                if float(
+                                                                                                        rng.rngmedlimsup) > float(
+                                                                                                    lista[count - 1]):
+                                                                                                    count_prov += check_catuso_indvisual(
+                                                                                                        i, nombre)
+                                                                                            else:
+                                                                                                if float(
+                                                                                                        rng.rngmedliminf) > float(
                                                                                                     lista[
                                                                                                         count - 1]) and \
-                                                                                                    float(
-                                                                                                        rng.rngmedlimsup) <= float(
-                                                                                                valor):
-                                                                                                count_prov += check_catuso_indvisual(
-                                                                                                    i, nombre)
-                                                                                    break
-                                                                    break
-                                                break
+                                                                                                        float(
+                                                                                                            rng.rngmedlimsup) <= float(
+                                                                                                    valor):
+                                                                                                    count_prov += check_catuso_indvisual(
+                                                                                                        i, nombre)
+                                                                                        break
+                                                                        break
+                                                    break
+                        # if nombre == 'equipo de rayos x':
+                        #     print(p.provnom + ' : ' + str(count_prov))
                         dict_ctd_inst[p.provnom] = count_prov
                     list1 = []
                     for p in prov:
@@ -840,7 +904,18 @@ def magnitudes_por_provincias():
                                         exact) + ' ' + unidad_medicion,
                                                           list1))
                             else:
-                                inst_per_prov.append((str(denom_inst) + ' mayor de ' + str(lista[count - 1]) + ' ' +
+                                if nombre == 'termómetro líquido en vidrio':
+                                    if exact == 1000000:
+                                        inst_per_prov.append(('Termómetro líquido en vidrio mayor de ' + str(lista[count - 1]) + ' ' +
+                                                              unidad_medicion + ' con valor de división mayor de ' + str(
+                                            exactitud[count_exact - 1]) + ' ' + unidad_medicion, list1))
+                                    else:
+                                        inst_per_prov.append(('Termómetro líquido en vidrio mayor de ' + str(lista[
+                                                                                          count - 1]) + ' ' + unidad_medicion + ' con valor de división menor o igual a ' + str(
+                                            exact) + ' ' + unidad_medicion,
+                                                              list1))
+                                else:
+                                    inst_per_prov.append((str(denom_inst) + ' mayor de ' + str(lista[count - 1]) + ' ' +
                                                       unidad_medicion, list1))
                         else:
                             if nombre == 'regla':
@@ -855,8 +930,19 @@ def magnitudes_por_provincias():
                                         exact) + ' ' + unidad_medicion,
                                                           list1))
                             else:
-                                inst_per_prov.append(
-                                    (str(denom_inst) + ' hasta ' + str(valor) + ' ' + unidad_medicion, list1))
+                                if nombre == 'termómetro líquido en vidrio':
+                                    if exact == 1000000:
+                                        inst_per_prov.append(('Termómetro líquido en vidrio hasta ' + str(valor) + ' ' +
+                                                              unidad_medicion + ' con valor de división mayor de ' + str(
+                                            exactitud[count_exact - 1]) + ' ' + unidad_medicion,
+                                                              list1))
+                                    else:
+                                        inst_per_prov.append(('Termómetro líquido en vidrio hasta ' + str(valor) + ' ' +
+                                                              unidad_medicion + ' con valor de división menor o igual a ' + str(
+                                            exact) + ' ' + unidad_medicion,
+                                                              list1))
+                                else:
+                                    inst_per_prov.append((str(denom_inst) + ' hasta ' + str(valor) + ' ' + unidad_medicion, list1))
         inst_per_prov_per_magn.append((k, inst_per_prov))
 
     return inst_per_prov_per_magn
@@ -919,8 +1005,8 @@ def check_catuso_indvisual(inst, nombre):
                 return 0
         else:
             return 1
-        
-        
+
+
 def more_info(ins, inst_gen):
     empresas = Empresas.objects.all()
     for emp in empresas:

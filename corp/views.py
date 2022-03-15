@@ -23,9 +23,6 @@ def principal(request):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
-            print('except2')
-            print('username: \'' + username + '\'')
-            print('pass: \'' + password + '\'')
             content = {
                 'invalid_login': True,
                 'msg': 'Usuario no válido'
@@ -35,7 +32,6 @@ def principal(request):
             if check_password(password, user.password):
                 return HttpResponseRedirect(reverse('corp:index'))
             else:
-                print('else')
                 content = {
                     'invalid_login': True,
                     'msg': 'Contraseña incorrecta'
@@ -55,7 +51,7 @@ def cant_inst(request):
 
 def generalidades_instrumento(request):
     instr_single = remove_duplicated_instruments()
-    magns = Magnitudes.objects.all()
+    magns = remove_duplicated_magnitudes()
     cant_instr = 0
     lista1, lista2, lista3, lista4 = obtener_instrumento_fabricante(instr_single)
     cant_inst_multifunc_elect_uso = 0
@@ -76,6 +72,7 @@ def generalidades_instrumento(request):
     for ins in instr_single:
         cant_instr += 1
         for m in magns:
+            # print(str(m.idmag) + ' : ' + str(m.grpmagnom.grpmagnom))
             if m.grpmagnom.grpmagnom == 'Electricidad' and ins.idmag_id == m.idmag and ins.magiddb_id == m.magiddb:
                 if ins.instdescripcion == 'Multifunción con 2 o 3 magnitudes eléctricas':
                     if ins.estadoinstnom.estadoinstnom == 'Uso':
@@ -137,7 +134,7 @@ def magnitud_instrumento(request):
 
 def instrumentos_trabajo_gen(request):
     instr_single = remove_duplicated_instruments()
-    magns = Magnitudes.objects.all()
+    magns = remove_duplicated_magnitudes()
 
     cant_trab = 0
     inst_trab_more_info = dict()
@@ -231,7 +228,7 @@ def instrumentos_trabajo_gen(request):
             if ins.instnom.__contains__('Galga'):
                 cant_galga += 1
                 inst_galga_more_info = more_info(ins, inst_galga_more_info)
-            if ins.instnom.__contains__('TTR') or ins.instnom.__contains__('Medidor de Relación de Transformación'):
+            if ins.instnom  == 'Medidor de Relación de Transformación':
                 cant_ttr += 1
                 inst_ttr_more_info = more_info(ins, inst_ttr_more_info)
             if ins.instnom.__contains__('Medidor de armónico'):
@@ -492,7 +489,7 @@ def patrones(request):
     # Determinar la cantidad de instrumentos patrones de trabajo
 
     # Determinar cantidad de patrones de electricidad
-    magnitudes = Magnitudes.objects.all()
+    magnitudes = remove_duplicated_magnitudes()
 
     dictionary = cantidad_inst_por_grupo(instr_patr, magnitudes)
 
