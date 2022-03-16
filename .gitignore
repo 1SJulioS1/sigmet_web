@@ -1,0 +1,8 @@
+.idea
+__pycache__
+
+corp/__pycache__
+corp/migrations
+corp/__init__.py
+sigmet_corp/__init__.py
+sigmet_corp/__pycache__
