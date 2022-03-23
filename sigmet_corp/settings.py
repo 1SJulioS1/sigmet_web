@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corp.apps.CorpConfig',
+    'sigmet.apps.SigmetConfig',
 ]
 
 MIDDLEWARE = [
@@ -74,17 +75,9 @@ WSGI_APPLICATION = 'sigmet_corp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'HOST': "localhost",
-        'USER': "sigmet",
-        'PASSWORD': "sigmet",
-        'NAME': "SigCorpDatabase",
-        'PORT': 1433,
-        'OPTIONS': {
-            'driver': 'SQL Server Native Client 10.0',
-            'MARS_Connection': True,
-            'driver_supports_utf8': True,
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3', # This is where you put the name of the db file.
+                 # If one doesn't exist, it will be created at migration time.
     }
 }
 

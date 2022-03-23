@@ -4,7 +4,7 @@ from datetime import date
 import pandas as pd
 import xlsxwriter
 
-from corp.models import *
+from .models import *
 
 
 def obtener_instrumentos_rango(minimo, maximo, unidad_de_medicion, instrument_subset):

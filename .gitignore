@@ -1,0 +1,10 @@
+corp/migrations
+db.sqlite3
+.git
+.gitignore
+.idea
+corp/__pycache__
+sigmet/__pycache__
+sigmet/migrations
+sigmet/__init__.py
+sigmet_corp/__pycache__

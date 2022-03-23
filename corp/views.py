@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from corp.auxiliar_functions import *
-from corp.models import *
+from .models import *
 
 
 def principal(request):

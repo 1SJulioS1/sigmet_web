@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/PycharmProjects/excel_process/.idea/excel_process.iml" filepath="$USER_HOME$/PycharmProjects/excel_process/.idea/excel_process.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../PROCALIB_ATIVC/procalib_ativc/.idea/proyecto.iml" filepath="$PROJECT_DIR$/../../../PROCALIB_ATIVC/procalib_ativc/.idea/proyecto.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/sigmet_corp.iml" filepath="$PROJECT_DIR$/.idea/sigmet_corp.iml" />
-      <module fileurl="file://$USER_HOME$/PycharmProjects/test/.idea/test.iml" filepath="$USER_HOME$/PycharmProjects/test/.idea/test.iml" />
     </modules>
   </component>
 </project>
