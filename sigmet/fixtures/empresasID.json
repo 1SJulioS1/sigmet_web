@@ -1,0 +1,16 @@
+[
+  {
+    "model": "sigmet.EmpresaId",
+    "id": 134,
+    "fields": {
+      "nombre": "ATI Villa Clara"
+    }
+  },
+  {
+    "model": "sigmet.EmpresaId",
+    "id": 135,
+    "fields": {
+      "nombre": "ATI Camagüey"
+    }
+  }
+]

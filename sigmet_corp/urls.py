@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('corp.urls')),
+    path('sigmet/', include('sigmet.urls'))
 ]

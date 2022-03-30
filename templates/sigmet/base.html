@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta charset="UTF-8">
+    <link href="{% static 'styles/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'styles/boostrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/datable/datatables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/custom_styles.css' %}" rel="stylesheet">
+    <title>Sigmet Corporativo</title>
+</head>
+<body>
+{% block body %}
+{% endblock %}
+
+<script src="{% static 'scripts/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" charset="utf8" src="{% static 'scripts/datable/datatables.js' %}"></script>
+<script type="text/javascript" charset="utf8" src="{% static 'scripts/boostrap/bootstrap.js' %}"></script>
+</body>
+</html>

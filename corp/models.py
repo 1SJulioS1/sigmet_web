@@ -15,7 +15,6 @@ class Ajustes(models.Model):
     empiddb = models.IntegerField(db_column='EmpIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Ajustes'
         unique_together = (('idemp', 'empiddb'),)
 
@@ -25,12 +24,11 @@ class Atributosprocesoscorporativos(models.Model):
                                         max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'AtributosProcesosCorporativos'
 
 
 class Caracteristicasmetrologicas(models.Model):
-    idcaractmet = models.IntegerField(db_column='IdCaractMet', primary_key=True)  # Field name made lowercase.
+    idcaractmet = models.AutoField(db_column='IdCaractMet', primary_key=True)  # Field name made lowercase.
     idinst = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='IdInst',
                                related_name='caracteristicasmetrologicas_idinst')  # Field name made lowercase.
     idrngmed = models.ForeignKey('Rangosmedicion', models.DO_NOTHING, db_column='IdRngMed',
@@ -58,7 +56,6 @@ class Caracteristicasmetrologicas(models.Model):
                                        related_name='caracteristicasmetrologicas_señalunifiddb')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'CaracteristicasMetrologicas'
         unique_together = (('idcaractmet', 'caractmetriddb'),)
 
@@ -67,7 +64,6 @@ class Cargos(models.Model):
     cargonom = models.CharField(db_column='CargoNom', primary_key=True, max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Cargos'
 
 
@@ -75,7 +71,6 @@ class Categoriasinstrumentos(models.Model):
     catinstnom = models.CharField(db_column='CatInstNom', primary_key=True, max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'CategoriasInstrumentos'
 
 
@@ -83,7 +78,6 @@ class Categoriasusos(models.Model):
     catusonom = models.CharField(db_column='CatUsoNom', primary_key=True, max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'CategoriasUsos'
 
 
@@ -92,7 +86,6 @@ class Centrocosto(models.Model):
                                       max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'CentroCosto'
 
 
@@ -101,14 +94,13 @@ class Certificados(models.Model):
     idinst = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='IdInst')  # Field name made lowercase.
     certno = models.CharField(db_column='CertNo', max_length=50)  # Field name made lowercase.
     certtipo = models.CharField(db_column='CertTipo', max_length=50)  # Field name made lowercase.
-    idmetodo = models.ForeignKey('Metodoscalibracionverificacion', models.DO_NOTHING, db_column='IdMetodo', blank=True,
-                                 null=True, related_name='certificados_idmetodo')  # Field name made lowercase.
+    idmetodo = models.ForeignKey('Metodoscalibracionverificacion', models.DO_NOTHING, db_column='IdMetodo',
+                                 related_name='certificados_idmetodo')  # Field name made lowercase.
     idempserv = models.ForeignKey('Empresasserviciadoras', models.DO_NOTHING, db_column='IdEmpServ', blank=True,
                                   null=True)  # Field name made lowercase.
     observaciones = models.TextField(db_column='Observaciones', blank=True, null=True)  # Field name made lowercase.
-    resultado = models.CharField(db_column='Resultado', max_length=50, blank=True,
-                                 null=True)  # Field name made lowercase.
-    certfecha = models.DateField(db_column='CertFecha', blank=True, null=True)  # Field name made lowercase.
+    resultado = models.CharField(db_column='Resultado', max_length=50)  # Field name made lowercase.
+    certfecha = models.DateField(db_column='CertFecha')  # Field name made lowercase.
     empserviddb = models.ForeignKey('Empresasserviciadoras', models.DO_NOTHING, db_column='EmpServIdDB',
                                     related_name='certificados_emprserviddb')  # Field name made lowercase.
     instiddb = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='InstIdDB',
@@ -118,7 +110,6 @@ class Certificados(models.Model):
                                    related_name='certificados_metodoiddb')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Certificados'
         unique_together = (('idcert', 'certiddb'),)
 
@@ -133,7 +124,6 @@ class Cindicionesambientalesinstrumentos(models.Model):
     condambiddb = models.IntegerField(db_column='CondAmbIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'CindicionesAmbientalesInstrumentos'
         unique_together = (('idcondamb', 'idinst', 'condambiddb'),)
 
@@ -142,7 +132,7 @@ class Condicionesambientales(models.Model):
     idcondamb = models.AutoField(db_column='IdCondAmb', primary_key=True)  # Field name made lowercase.
     condambnom = models.CharField(db_column='CondAmbNom', max_length=50)  # Field name made lowercase.
     idrelmagunimed = models.ForeignKey('Relacionmagnitudesunidadesmedicion', models.DO_NOTHING,
-                                       db_column='IdRelMagUniMed', blank=True, null=True,
+                                       db_column='IdRelMagUniMed',
                                        related_name='condicionesambientales_idrelmagunimed')  # Field name made lowercase.
     tipocondambnom = models.CharField(db_column='TipoCondAmbNom', max_length=50)  # Field name made lowercase.
     relmagunimediddb = models.ForeignKey('Relacionmagnitudesunidadesmedicion', models.DO_NOTHING,
@@ -151,7 +141,6 @@ class Condicionesambientales(models.Model):
     condambiddb = models.IntegerField(db_column='CondAmbIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'CondicionesAmbientales'
         unique_together = (('idcondamb', 'condambiddb'),)
 
@@ -159,17 +148,13 @@ class Condicionesambientales(models.Model):
 class Controlmetrologicosistemascadenasmedida(models.Model):
     idcontmetsistcadmed = models.AutoField(db_column='IdContMetSistCadMed',
                                            primary_key=True)  # Field name made lowercase.
-    idsistcadmed = models.ForeignKey('Sistemascadenasdemedida', models.DO_NOTHING, db_column='IdSistCadMed', blank=True,
-                                     null=True,
+    idsistcadmed = models.ForeignKey('Sistemascadenasdemedida', models.DO_NOTHING, db_column='IdSistCadMed',
                                      related_name='contmetsistcadmed_idsistcadmed')  # Field name made lowercase.
-    contmetfechaplan = models.DateField(db_column='ContMetFechaPlan', blank=True,
-                                        null=True)  # Field name made lowercase.
-    contmetfechaejec = models.DateField(db_column='ContMetFechaEjec', blank=True,
-                                        null=True)  # Field name made lowercase.
-    idprovserv = models.ForeignKey('Empresasserviciadoras', models.DO_NOTHING, db_column='IdProvServ', blank=True,
-                                   null=True, related_name='contmetsistcadmed_idprovserv')  # Field name made lowercase.
-    contmetresultado = models.CharField(db_column='ContMetResultado', max_length=50, blank=True,
-                                        null=True)  # Field name made lowercase.
+    contmetfechaplan = models.DateField(db_column='ContMetFechaPlan')  # Field name made lowercase.
+    contmetfechaejec = models.DateField(db_column='ContMetFechaEjec')  # Field name made lowercase.
+    idprovserv = models.ForeignKey('Empresasserviciadoras', models.DO_NOTHING, db_column='IdProvServ',
+                                   related_name='contmetsistcadmed_idprovserv')  # Field name made lowercase.
+    contmetresultado = models.CharField(db_column='ContMetResultado', max_length=50)  # Field name made lowercase.
     contmetobservaciones = models.TextField(db_column='ContMetObservaciones', blank=True,
                                             null=True)  # Field name made lowercase.
     empserviddb = models.ForeignKey('Empresasserviciadoras', models.DO_NOTHING, db_column='EmpServIdDB',
@@ -179,28 +164,22 @@ class Controlmetrologicosistemascadenasmedida(models.Model):
     contmetsistcadmediddb = models.IntegerField(db_column='ContMetSistCadMedIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'ControlMetrologicoSistemasCadenasMedida'
         unique_together = (('idcontmetsistcadmed', 'contmetsistcadmediddb'),)
 
 
 class Empresas(models.Model):
     idemp = models.AutoField(db_column='IdEmp', primary_key=True)  # Field name made lowercase.
-    empcod = models.CharField(db_column='EmpCod', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    empnom = models.TextField(db_column='EmpNom', blank=True, null=True)  # Field name made lowercase.
-    empnomcom = models.CharField(db_column='EmpNomCom', max_length=50, blank=True,
-                                 null=True)  # Field name made lowercase.
+    empcod = models.CharField(db_column='EmpCod', max_length=50)  # Field name made lowercase.
+    empnom = models.TextField(db_column='EmpNom')  # Field name made lowercase.
+    empnomcom = models.CharField(db_column='EmpNomCom', max_length=50)  # Field name made lowercase.
     empdir = models.CharField(db_column='EmpDir', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    idmun = models.ForeignKey('Municipios', models.DO_NOTHING, db_column='IdMun', blank=True,
-                              null=True)  # Field name made lowercase.
-    emprepres = models.CharField(db_column='EmpRepres', max_length=50, blank=True,
-                                 null=True)  # Field name made lowercase.
-    emptelef = models.CharField(db_column='EmpTelef', max_length=50, blank=True,
-                                null=True)  # Field name made lowercase.
+    idmun = models.ForeignKey('Municipios', models.DO_NOTHING, db_column='IdMun')  # Field name made lowercase.
+    emprepres = models.CharField(db_column='EmpRepres', max_length=50)  # Field name made lowercase.
+    emptelef = models.CharField(db_column='EmpTelef', max_length=50)  # Field name made lowercase.
     empfax = models.CharField(db_column='EmpFax', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    empemail = models.CharField(db_column='EmpEmail', max_length=50, blank=True,
-                                null=True)  # Field name made lowercase.
-    empweb = models.CharField(db_column='EmpWeb', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    empemail = models.CharField(db_column='EmpEmail', max_length=50)  # Field name made lowercase.
+    empweb = models.CharField(db_column='EmpWeb', max_length=50)  # Field name made lowercase.
     empparent = models.ForeignKey('self', models.DO_NOTHING, db_column='EmpParent', blank=True, null=True,
                                   related_name='empresas_empparent')  # Field name made lowercase.
     empiddb = models.IntegerField(db_column='EmpIdDB')  # Field name made lowercase.
@@ -208,21 +187,17 @@ class Empresas(models.Model):
                                           related_name='empresas_empparent_empiddb')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Empresas'
         unique_together = (('idemp', 'empiddb'),)
 
 
 class Empresasserviciadoras(models.Model):
     idempserv = models.AutoField(db_column='IdEmpServ', primary_key=True)  # Field name made lowercase.
-    empservnom = models.CharField(db_column='EmpServNom', max_length=50, blank=True,
-                                  null=True)  # Field name made lowercase.
-    empservnomcom = models.CharField(db_column='EmpServNomCom', max_length=50, blank=True,
-                                     null=True)  # Field name made lowercase.
+    empservnom = models.CharField(db_column='EmpServNom', max_length=50)  # Field name made lowercase.
+    empservnomcom = models.CharField(db_column='EmpServNomCom', max_length=50)  # Field name made lowercase.
     empserviddb = models.IntegerField(db_column='EmpServIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'EmpresasServiciadoras'
         unique_together = (('idempserv', 'empserviddb'),)
 
@@ -232,7 +207,6 @@ class Estadosinstrumentos(models.Model):
                                      max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'EstadosInstrumentos'
 
 
@@ -240,17 +214,15 @@ class Gruposmagnitudes(models.Model):
     grpmagnom = models.CharField(db_column='GrpMagNom', primary_key=True, max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'GruposMagnitudes'
 
 
 class Instrumentos(models.Model):
     idinst = models.IntegerField(db_column='IdInst', primary_key=True)  # Field name made lowercase.
-    idemp = models.ForeignKey('Localizaciones', models.DO_NOTHING, db_column='IdEmp', blank=True, null=True,
+    idemp = models.ForeignKey('Localizaciones', models.DO_NOTHING, db_column='IdEmp',
                               related_name='instrumentos_idemp')  # Field name made lowercase.
-    locnom = models.ForeignKey('Localizaciones', models.DO_NOTHING, db_column='LocNom', blank=True,
-                               null=True)  # Field name made lowercase.
-    instnom = models.CharField(db_column='InstNom', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    locnom = models.ForeignKey('Localizaciones', models.DO_NOTHING, db_column='LocNom')  # Field name made lowercase.
+    instnom = models.CharField(db_column='InstNom', max_length=50)  # Field name made lowercase.
     instdescripcion = models.TextField(db_column='InstDescripcion', blank=True, null=True)  # Field name made lowercase.
     instmarca = models.CharField(db_column='InstMarca', max_length=50, blank=True,
                                  null=True)  # Field name made lowercase.
@@ -258,24 +230,22 @@ class Instrumentos(models.Model):
                                   null=True)  # Field name made lowercase.
     instnoserie = models.CharField(db_column='InstNoSerie', max_length=50, blank=True,
                                    null=True)  # Field name made lowercase.
-    instnoinv = models.CharField(db_column='InstNoInv', max_length=50, blank=True,
-                                 null=True)  # Field name made lowercase.
+    instnoinv = models.CharField(db_column='InstNoInv', max_length=50)  # Field name made lowercase.
     instanhofab = models.CharField(db_column='InstAñoFab', max_length=50, blank=True,
                                    null=True)  # Field name made lowercase.
     instpais = models.CharField(db_column='InstPais', max_length=50, blank=True,
                                 null=True)  # Field name made lowercase.
-    idmag = models.ForeignKey('Magnitudes', models.DO_NOTHING, db_column='IdMag', blank=True, null=True,
+    idmag = models.ForeignKey('Magnitudes', models.DO_NOTHING, db_column='IdMag',
                               related_name='instrumento_idmag')  # Field name made lowercase.
-    catusonom = models.ForeignKey(Categoriasusos, models.DO_NOTHING, db_column='CatUsoNom', blank=True,
-                                  null=True)  # Field name made lowercase.
-    catinstnom = models.ForeignKey(Categoriasinstrumentos, models.DO_NOTHING, db_column='CatInstNom', blank=True,
-                                   null=True)  # Field name made lowercase.
-    instindvisual = models.CharField(db_column='InstIndVisual', max_length=50, blank=True,
-                                     null=True)  # Field name made lowercase.
-    estadoinstnom = models.ForeignKey(Estadosinstrumentos, models.DO_NOTHING, db_column='EstadoInstNom', blank=True,
-                                      null=True)  # Field name made lowercase.
+    catusonom = models.ForeignKey(Categoriasusos, models.DO_NOTHING,
+                                  db_column='CatUsoNom')  # Field name made lowercase.
+    catinstnom = models.ForeignKey(Categoriasinstrumentos, models.DO_NOTHING,
+                                   db_column='CatInstNom')  # Field name made lowercase.
+    instindvisual = models.CharField(db_column='InstIndVisual', max_length=50)  # Field name made lowercase.
+    estadoinstnom = models.ForeignKey(Estadosinstrumentos, models.DO_NOTHING,
+                                      db_column='EstadoInstNom')  # Field name made lowercase.
     idrelatribproccorp = models.ForeignKey('Relacionatributosprocesos', models.DO_NOTHING,
-                                           db_column='IdRelAtribProcCorp', blank=True, null=True,
+                                           db_column='IdRelAtribProcCorp',
                                            related_name='instrumentos_idrelatribprocorp')  # Field name made lowercase.
     instfechapuestoserv = models.DateField(db_column='InstFechaPuestoServ', blank=True,
                                            null=True)  # Field name made lowercase.
@@ -309,21 +279,19 @@ class Instrumentos(models.Model):
                                 related_name='instruemntos_magiddb')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Instrumentos'
         unique_together = (('idinst', 'instiddb'),)
 
 
 class Localizaciones(models.Model):
     idemp = models.OneToOneField('Empresas', models.DO_NOTHING, db_column='IdEmp', primary_key=True,
-                              related_name='localizaciones_idemp')  # Field name made lowercase.
+                                 related_name='localizaciones_idemp')  # Field name made lowercase.
     locnom = models.CharField(db_column='LocNom', max_length=50)  # Field name made lowercase.
     empiddb = models.ForeignKey('Empresas', models.DO_NOTHING, db_column='EmpIdDB',
                                 related_name='localizaciones_empiddb')  # Field name made lowercase.
     lociddb = models.IntegerField(db_column='LocIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Localizaciones'
         unique_together = (('idemp', 'locnom', 'empiddb', 'lociddb'),)
 
@@ -332,7 +300,6 @@ class Lugares(models.Model):
     lugarmov = models.CharField(db_column='LugarMov', primary_key=True, max_length=100)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Lugares'
 
 
@@ -344,7 +311,6 @@ class Magnitudes(models.Model):
     magiddb = models.IntegerField(db_column='MagIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Magnitudes'
         unique_together = (('idmag', 'magiddb'),)
 
@@ -356,14 +322,13 @@ class Metodoscalibracionverificacion(models.Model):
     metodoiddb = models.IntegerField(db_column='MetodoIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'MetodosCalibracionVerificacion'
         unique_together = (('idmetodo', 'metodoiddb'),)
 
 
 class Movimientos(models.Model):
     idinst = models.OneToOneField('Instrumentos', models.DO_NOTHING, db_column='IdInst', primary_key=True,
-                               related_name='movimientos_idinst')  # Field name made lowercase.
+                                  related_name='movimientos_idinst')  # Field name made lowercase.
     tipomov = models.CharField(db_column='TipoMov', max_length=50, blank=True, null=True)  # Field name made lowercase.
     lugarmov = models.CharField(db_column='LugarMov', max_length=100, blank=True,
                                 null=True)  # Field name made lowercase.
@@ -371,28 +336,26 @@ class Movimientos(models.Model):
     instiddb = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='InstIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Movimientos'
         unique_together = (('idinst', 'instiddb'),)
 
 
 class Municipios(models.Model):
     idmun = models.AutoField(db_column='IdMun', primary_key=True)  # Field name made lowercase.
-    idprov = models.IntegerField(db_column='IdProv', blank=True, null=True)  # Field name made lowercase.
-    munnom = models.CharField(db_column='MunNom', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    idprov = models.IntegerField(db_column='IdProv')  # Field name made lowercase.
+    munnom = models.CharField(db_column='MunNom', max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Municipios'
 
 
 class Planmantenimiento(models.Model):
     idplan = models.IntegerField(db_column='IdPlan', primary_key=True)  # Field name made lowercase.
-    fechaplan = models.DateField(db_column='FechaPlan', blank=True, null=True)  # Field name made lowercase.
-    fechaejec = models.DateField(db_column='FechaEjec', blank=True, null=True)  # Field name made lowercase.
+    fechaplan = models.DateField(db_column='FechaPlan')  # Field name made lowercase.
+    fechaejec = models.DateField(db_column='FechaEjec')  # Field name made lowercase.
     idempserv = models.ForeignKey('Empresasserviciadoras', models.DO_NOTHING, db_column='IdEmpServ', blank=True,
                                   null=True, related_name='planmtto_idempserv')  # Field name made lowercase.
-    idinst = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='IdInst', blank=True, null=True,
+    idinst = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='IdInst',
                                related_name='planmtto_idinst')  # Field name made lowercase.
     observaciones = models.TextField(db_column='Observaciones', blank=True, null=True)  # Field name made lowercase.
     instiddb = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='InstIdDB',
@@ -402,18 +365,17 @@ class Planmantenimiento(models.Model):
                                     related_name='planmtto_empserviddb')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'PlanMantenimiento'
         unique_together = (('idplan', 'planmttoiddb'),)
 
 
 class Planes(models.Model):
     idplan = models.AutoField(db_column='IdPlan', primary_key=True)  # Field name made lowercase.
-    idinst = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='IdInst', blank=True, null=True,
+    idinst = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='IdInst',
                                related_name='plan_idinst')  # Field name made lowercase.
-    fechaplan = models.DateField(db_column='FechaPlan', blank=True, null=True)  # Field name made lowercase.
-    tipo = models.CharField(db_column='Tipo', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    idcert = models.ForeignKey('Certificados', models.DO_NOTHING, db_column='IdCert', blank=True, null=True,
+    fechaplan = models.DateField(db_column='FechaPlan')  # Field name made lowercase.
+    tipo = models.CharField(db_column='Tipo', max_length=50)  # Field name made lowercase.
+    idcert = models.ForeignKey('Certificados', models.DO_NOTHING, db_column='IdCert',
                                related_name='plan_idcert')  # Field name made lowercase.
     instiddb = models.ForeignKey('Instrumentos', models.DO_NOTHING, db_column='InstIdDB',
                                  related_name='plan_instiddb')  # Field name made lowercase.
@@ -422,7 +384,6 @@ class Planes(models.Model):
                                  related_name='plan_certiddb')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Planes'
         unique_together = (('idplan', 'planesiddb'),)
 
@@ -432,25 +393,21 @@ class Procesoscorporativos(models.Model):
                                    max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'ProcesosCorporativos'
 
 
 class Provincias(models.Model):
     idprov = models.AutoField(db_column='IdProv', primary_key=True)  # Field name made lowercase.
-    provnom = models.CharField(db_column='ProvNom', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    provnom = models.CharField(db_column='ProvNom', max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Provincias'
 
 
 class Rangosmedicion(models.Model):
     idrngmed = models.IntegerField(db_column='IdRngMed', primary_key=True)  # Field name made lowercase.
-    rngmedlimsup = models.CharField(db_column='RngMedLimSup', max_length=50, blank=True,
-                                    null=True)  # Field name made lowercase.
-    rngmedliminf = models.CharField(db_column='RngMedLimInf', max_length=50, blank=True,
-                                    null=True)  # Field name made lowercase.
+    rngmedlimsup = models.CharField(db_column='RngMedLimSup', max_length=50)  # Field name made lowercase.
+    rngmedliminf = models.CharField(db_column='RngMedLimInf', max_length=50)  # Field name made lowercase.
     idrelmagunimed = models.ForeignKey('Relacionmagnitudesunidadesmedicion', models.DO_NOTHING,
                                        db_column='IdRelMagUniMed',
                                        related_name='rangosmedicion_idrelmagunimed')  # Field name made lowercase.
@@ -460,7 +417,6 @@ class Rangosmedicion(models.Model):
                                          related_name='rangosmedicion_relmagunimediddb')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'RangosMedicion'
         unique_together = (('idrngmed', 'rngmediddb'),)
 
@@ -468,15 +424,13 @@ class Rangosmedicion(models.Model):
 class Relacionatributosprocesos(models.Model):
     idrelatribproccorp = models.IntegerField(db_column='IdRelAtribProcCorp',
                                              primary_key=True)  # Field name made lowercase.
-    proccorpnom = models.ForeignKey(Procesoscorporativos, models.DO_NOTHING, db_column='ProcCorpNom', blank=True,
-                                    null=True, related_name='relatribproc_proccorpnom')  # Field name made lowercase.
+    proccorpnom = models.ForeignKey(Procesoscorporativos, models.DO_NOTHING, db_column='ProcCorpNom',
+                                    related_name='relatribproc_proccorpnom')  # Field name made lowercase.
     atribproccorpnom = models.ForeignKey(Atributosprocesoscorporativos, models.DO_NOTHING, db_column='AtribProcCorpNom',
-                                         blank=True, null=True,
                                          related_name='relatribproc_atribcorpnom')  # Field name made lowercase.
     relatribprociddb = models.IntegerField(db_column='RelAtribProcIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'RelacionAtributosProcesos'
         unique_together = (('idrelatribproccorp', 'relatribprociddb'),)
 
@@ -494,7 +448,6 @@ class Relacionmagnitudesunidadesmedicion(models.Model):
     relmagunimediddb = models.IntegerField(db_column='RelMagUniMedIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'RelacionMagnitudesUnidadesMedicion'
         unique_together = (('idrelmagunimed', 'relmagunimediddb'),)
 
@@ -504,24 +457,20 @@ class Senhalesunificadas(models.Model):
     senhalunifiddb = models.IntegerField(db_column='SeñalUnifIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'SeñalesUnificadas'
         unique_together = (('idsenhalunif', 'senhalunifiddb'),)
 
 
 class Sistemascadenasdemedida(models.Model):
     idsistcadmed = models.AutoField(db_column='IdSistCadMed', primary_key=True)  # Field name made lowercase.
-    sistcadmedtipo = models.CharField(db_column='SistCadMedTipo', max_length=50, blank=True,
-                                      null=True)  # Field name made lowercase.
-    sistcadmednom = models.TextField(db_column='SistCadMedNom', blank=True, null=True)  # Field name made lowercase.
-    idemp = models.ForeignKey('Empresas', models.DO_NOTHING, db_column='IdEmp', blank=True, null=True,
+    sistcadmedtipo = models.CharField(db_column='SistCadMedTipo', max_length=50)  # Field name made lowercase.
+    sistcadmednom = models.TextField(db_column='SistCadMedNom')  # Field name made lowercase.
+    idemp = models.ForeignKey('Empresas', models.DO_NOTHING, db_column='IdEmp',
                               related_name='sistcadmed_idemp')  # Field name made lowercase.
-    idrngmed = models.ForeignKey('Rangosmedicion', models.DO_NOTHING, db_column='IdRngMed', blank=True, null=True,
+    idrngmed = models.ForeignKey('Rangosmedicion', models.DO_NOTHING, db_column='IdRngMed',
                                  related_name='sistcadmed_idrngmed')  # Field name made lowercase.
-    sistcadmedperiodocal = models.IntegerField(db_column='SistCadMedPeriodoCal', blank=True,
-                                               null=True)  # Field name made lowercase.
-    sistcadmedfechacal = models.DateField(db_column='SistCadMedFechaCal', blank=True,
-                                          null=True)  # Field name made lowercase.
+    sistcadmedperiodocal = models.IntegerField(db_column='SistCadMedPeriodoCal')  # Field name made lowercase.
+    sistcadmedfechacal = models.DateField(db_column='SistCadMedFechaCal')  # Field name made lowercase.
     empiddb = models.ForeignKey('Empresas', models.DO_NOTHING, db_column='EmpIdDB',
                                 related_name='sistcadmed_empiddb')  # Field name made lowercase.
     rngmediddb = models.ForeignKey('Rangosmedicion', models.DO_NOTHING, db_column='RngMedIdDB',
@@ -529,7 +478,6 @@ class Sistemascadenasdemedida(models.Model):
     sistcadmediddb = models.IntegerField(db_column='SistCadMedIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'SistemasCadenasDeMedida'
         unique_together = (('idsistcadmed', 'sistcadmediddb'),)
 
@@ -539,7 +487,6 @@ class Tipocondicionesambientales(models.Model):
                                       max_length=50)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'TipoCondicionesAmbientales'
 
 
@@ -551,7 +498,6 @@ class Unidadesmedicion(models.Model):
     unimediddb = models.IntegerField(db_column='UniMedIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'UnidadesMedicion'
         unique_together = (('idunimed', 'unimediddb'),)
 
@@ -566,6 +512,5 @@ class Usuarios(models.Model):
     empiddb = models.IntegerField(db_column='EmpIdDB')  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'Usuarios'
         unique_together = (('idemp', 'usuarionom'),)

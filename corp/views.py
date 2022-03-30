@@ -1,5 +1,5 @@
 import os
-
+from sigmet.decorators import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
@@ -9,7 +9,6 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from corp.auxiliar_functions import *
-from .models import *
 
 
 def principal(request):
@@ -48,7 +47,7 @@ def logout_view(request):
 def cant_inst(request):
     return render(request, 'corp/index.html')
 
-
+@ejec_required(allowed_roles=['Ejecutivo'])
 def generalidades_instrumento(request):
     instr_single = remove_duplicated_instruments()
     magns = remove_duplicated_magnitudes()
@@ -124,7 +123,7 @@ def generalidades_instrumento(request):
                                                            'multi_nom_dif_alm': json.dumps(multi_nom_dif_alm)
                                                            })
 
-
+@ejec_required(allowed_roles=['Ejecutivo'])
 def magnitud_instrumento(request):
     inst_per_magn_per_group = instrumentos_por_magnitud()
 
@@ -132,6 +131,7 @@ def magnitud_instrumento(request):
                                                        })
 
 
+@ejec_required(allowed_roles=['Ejecutivo'])
 def instrumentos_trabajo_gen(request):
     instr_single = remove_duplicated_instruments()
     magns = remove_duplicated_magnitudes()
@@ -228,7 +228,7 @@ def instrumentos_trabajo_gen(request):
             if ins.instnom.__contains__('Galga'):
                 cant_galga += 1
                 inst_galga_more_info = more_info(ins, inst_galga_more_info)
-            if ins.instnom  == 'Medidor de Relación de Transformación':
+            if ins.instnom == 'Medidor de Relación de Transformación':
                 cant_ttr += 1
                 inst_ttr_more_info = more_info(ins, inst_ttr_more_info)
             if ins.instnom.__contains__('Medidor de armónico'):
@@ -376,6 +376,7 @@ def instrumentos_trabajo_gen(request):
                    })
 
 
+@ejec_required(allowed_roles=['Ejecutivo'])
 def instrumentos_trabajo_pc(request):
     instr_single = remove_duplicated_instruments()
     inst_trab = []
@@ -390,6 +391,7 @@ def instrumentos_trabajo_pc(request):
     return render(request, 'corp/rng/instr_trab_proc_corp.html', {'ipcpp': instruments_per_companies_per_provinces})
 
 
+@ejec_required(allowed_roles=['Ejecutivo'])
 def instrumentos_trabajo_explot(request):
     instr_single = remove_duplicated_instruments()
     inst_trab = []
@@ -406,6 +408,7 @@ def instrumentos_trabajo_explot(request):
                                                                'ipcpp_20': inst_per_comp_20})
 
 
+@ejec_required(allowed_roles=['Ejecutivo'])
 def instrumentos_trabajo_fabr(request):
     instr_single = remove_duplicated_instruments()
     inst_trab = []
@@ -423,6 +426,7 @@ def instrumentos_trabajo_fabr(request):
                                                              'fab4': list4})
 
 
+@ejec_required(allowed_roles=['Ejecutivo'])
 def patrones(request):
     # Determinar cantidad de instrumentos que sean patrones
 
@@ -599,6 +603,7 @@ def patrones(request):
                                                        })
 
 
+@ejec_required(allowed_roles=['Ejecutivo'])
 def informe_magnitudes(request):
     export_informe_magnitudes()
 
@@ -611,3 +616,4 @@ def informe_magnitudes(request):
         response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
         response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
         return response
+

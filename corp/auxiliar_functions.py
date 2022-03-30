@@ -43,8 +43,6 @@ def instrumentos_por_magnitud():
     magns = remove_duplicated_magnitudes()
     instr_single = remove_duplicated_instruments()
 
-
-
     inst_per_mag_per_group = dict()
     for g in grupo:
         inst_per_magns = dict()
@@ -749,8 +747,9 @@ def magnitudes_por_provincias():
                             if es.idmun.idprov == p.idprov:
                                 for i in instr_single:
                                     if i.instnom == 'Equipo de rayos x':
-                                        print(str(i.idemp_id) + ' ' + str(es.idemp) + ' ' + ' ' + str(i.empiddb_id) + ' ' + str(es.empiddb) + ' ' + str(nombre))
-                                    if i.idemp_id == es.idemp and i.empiddb_id == es.empiddb and nombre == i.instnom.lower(): #and i.estadoinstnom == 'Uso':
+                                        print(str(i.idemp_id) + ' ' + str(es.idemp) + ' ' + ' ' + str(
+                                            i.empiddb_id) + ' ' + str(es.empiddb) + ' ' + str(nombre))
+                                    if i.idemp_id == es.idemp and i.empiddb_id == es.empiddb and nombre == i.instnom.lower():  # and i.estadoinstnom == 'Uso':
 
                                         print(str(k))
                                         if str(k) in ['Inst. Diagnóstico', 'Estaciones Meteorológicas', 'Velocidad']:
@@ -906,17 +905,18 @@ def magnitudes_por_provincias():
                             else:
                                 if nombre == 'termómetro líquido en vidrio':
                                     if exact == 1000000:
-                                        inst_per_prov.append(('Termómetro líquido en vidrio mayor de ' + str(lista[count - 1]) + ' ' +
-                                                              unidad_medicion + ' con valor de división mayor de ' + str(
-                                            exactitud[count_exact - 1]) + ' ' + unidad_medicion, list1))
+                                        inst_per_prov.append(
+                                            ('Termómetro líquido en vidrio mayor de ' + str(lista[count - 1]) + ' ' +
+                                             unidad_medicion + ' con valor de división mayor de ' + str(
+                                                exactitud[count_exact - 1]) + ' ' + unidad_medicion, list1))
                                     else:
                                         inst_per_prov.append(('Termómetro líquido en vidrio mayor de ' + str(lista[
-                                                                                          count - 1]) + ' ' + unidad_medicion + ' con valor de división menor o igual a ' + str(
+                                                                                                                 count - 1]) + ' ' + unidad_medicion + ' con valor de división menor o igual a ' + str(
                                             exact) + ' ' + unidad_medicion,
                                                               list1))
                                 else:
                                     inst_per_prov.append((str(denom_inst) + ' mayor de ' + str(lista[count - 1]) + ' ' +
-                                                      unidad_medicion, list1))
+                                                          unidad_medicion, list1))
                         else:
                             if nombre == 'regla':
                                 if exact == 1000000:
@@ -942,7 +942,8 @@ def magnitudes_por_provincias():
                                             exact) + ' ' + unidad_medicion,
                                                               list1))
                                 else:
-                                    inst_per_prov.append((str(denom_inst) + ' hasta ' + str(valor) + ' ' + unidad_medicion, list1))
+                                    inst_per_prov.append(
+                                        (str(denom_inst) + ' hasta ' + str(valor) + ' ' + unidad_medicion, list1))
         inst_per_prov_per_magn.append((k, inst_per_prov))
 
     return inst_per_prov_per_magn
