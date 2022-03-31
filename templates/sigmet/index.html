@@ -1,0 +1,7 @@
+{% extends 'sigmet/base.html' %}
+{% block body %}
+    Good!
+    <a href="{% url 'sigmet:logout' %}">Salir</a>
+    <a href="{% url 'sigmet:register' %}">Crear usuario</a>
+
+{% endblock %}

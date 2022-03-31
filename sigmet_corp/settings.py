@@ -132,8 +132,8 @@ STATICFILES_DIRS = [
     'static'
 ]
 
-LOGIN_URL = 'corp:principal'
-
 FIXTURE_DIRS = ['fixtures']
 
 AUTH_USER_MODEL = 'sigmet.MyUser'
+LOGIN_URL = 'sigmet:login'
+LOGIN_URL_REDIRECT = '/'

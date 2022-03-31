@@ -10,7 +10,7 @@ from django.urls import reverse
 
 from corp.auxiliar_functions import *
 
-
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def principal(request):
     if request.POST:
         username = request.POST['user']
@@ -38,16 +38,17 @@ def principal(request):
                 return render(request, 'corp/principal.html', content)
     return render(request, 'corp/principal.html')
 
-
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('corp:principal'))
 
-
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def cant_inst(request):
     return render(request, 'corp/index.html')
 
-@ejec_required(allowed_roles=['Ejecutivo'])
+
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def generalidades_instrumento(request):
     instr_single = remove_duplicated_instruments()
     magns = remove_duplicated_magnitudes()
@@ -123,7 +124,8 @@ def generalidades_instrumento(request):
                                                            'multi_nom_dif_alm': json.dumps(multi_nom_dif_alm)
                                                            })
 
-@ejec_required(allowed_roles=['Ejecutivo'])
+
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def magnitud_instrumento(request):
     inst_per_magn_per_group = instrumentos_por_magnitud()
 
@@ -131,7 +133,7 @@ def magnitud_instrumento(request):
                                                        })
 
 
-@ejec_required(allowed_roles=['Ejecutivo'])
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def instrumentos_trabajo_gen(request):
     instr_single = remove_duplicated_instruments()
     magns = remove_duplicated_magnitudes()
@@ -376,7 +378,7 @@ def instrumentos_trabajo_gen(request):
                    })
 
 
-@ejec_required(allowed_roles=['Ejecutivo'])
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def instrumentos_trabajo_pc(request):
     instr_single = remove_duplicated_instruments()
     inst_trab = []
@@ -391,7 +393,7 @@ def instrumentos_trabajo_pc(request):
     return render(request, 'corp/rng/instr_trab_proc_corp.html', {'ipcpp': instruments_per_companies_per_provinces})
 
 
-@ejec_required(allowed_roles=['Ejecutivo'])
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def instrumentos_trabajo_explot(request):
     instr_single = remove_duplicated_instruments()
     inst_trab = []
@@ -408,7 +410,7 @@ def instrumentos_trabajo_explot(request):
                                                                'ipcpp_20': inst_per_comp_20})
 
 
-@ejec_required(allowed_roles=['Ejecutivo'])
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def instrumentos_trabajo_fabr(request):
     instr_single = remove_duplicated_instruments()
     inst_trab = []
@@ -426,7 +428,7 @@ def instrumentos_trabajo_fabr(request):
                                                              'fab4': list4})
 
 
-@ejec_required(allowed_roles=['Ejecutivo'])
+@role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def patrones(request):
     # Determinar cantidad de instrumentos que sean patrones
 
@@ -603,7 +605,7 @@ def patrones(request):
                                                        })
 
 
-@ejec_required(allowed_roles=['Ejecutivo'])
+@role_required(allowed_roles=['Ejecutivo', "Administrador"])
 def informe_magnitudes(request):
     export_informe_magnitudes()
 
@@ -616,4 +618,3 @@ def informe_magnitudes(request):
         response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
         response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
         return response
-

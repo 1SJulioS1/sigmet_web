@@ -1,20 +1,18 @@
 from django import forms
 from sigmet.models import *
-from corp.models import *
 
 
 class UsuarioForm(forms.Form):
     ROL = [
-        ('Administrador', 'Administrador'),
-        ('Ejecutivo', 'Ejecutivo'),
-        ('Operador', 'Operador'),
+        ("Administrador", "Administrador"),
+        ("Ejecutivo", "Ejecutivo"),
+        ("Operador", "Operador"),
     ]
 
     email = forms.EmailField(required=True,
                              widget=forms.EmailInput(
                                  attrs={
                                      'class': 'form-control',
-                                     'id': 'usuario_email'
                                  }
                              )
                              )
@@ -24,7 +22,6 @@ class UsuarioForm(forms.Form):
                                          attrs={
                                              'type': 'date',
                                              'class': 'form-control',
-                                             'id': 'usuario_licencia'
                                          }
                                      ))
 
@@ -33,7 +30,6 @@ class UsuarioForm(forms.Form):
                             widget=forms.Select(
                                 attrs={
                                     'class': 'form-control',
-                                    'id': 'usuario_rol',
                                 }
                             ))
 
@@ -49,7 +45,6 @@ class UsuarioForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control',
-                'id': 'usuario_password1'
             }
         )
     )
@@ -58,7 +53,6 @@ class UsuarioForm(forms.Form):
                                 widget=forms.PasswordInput(
                                     attrs={
                                         'class': 'form-control',
-                                        'id': 'usuario_password2'
                                     }
                                 )
                                 )
