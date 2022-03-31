@@ -5,10 +5,11 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
-
+from sigmet.urls import *
 from corp.auxiliar_functions import *
+
 
 @role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def principal(request):
@@ -38,10 +39,12 @@ def principal(request):
                 return render(request, 'corp/principal.html', content)
     return render(request, 'corp/principal.html')
 
+
 @role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse('corp:principal'))
+    return redirect('sigmet:login')
+
 
 @role_required(allowed_roles=['Ejecutivo', 'Administrador'])
 def cant_inst(request):

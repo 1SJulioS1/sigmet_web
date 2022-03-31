@@ -87,7 +87,7 @@ def register_user(request):
                     return render(request, 'sigmet/authent/register.html', {'form': usuario_form})
                 else:
                     usuario_form = UsuarioForm()
-                    messages.info(request, "Usuario creado exitosamente")
+                    messages.success(request, "Usuario creado exitosamente")
                     return render(request, 'sigmet/authent/register.html', {'form': usuario_form})
         else:
             return render(request, 'sigmet/authent/register.html', {'form': usuario_form})
